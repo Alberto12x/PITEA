@@ -1,5 +1,0 @@
-click==8.1.7
-pillow==11.0.0
-pycryptodome==3.21.0
-pydub==0.25.1
-tomli_w==1.2.0
