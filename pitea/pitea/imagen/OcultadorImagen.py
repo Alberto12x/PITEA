@@ -1,12 +1,6 @@
 from abc import ABC, abstractmethod
 from PIL import Image
-from pitea.constantes import (
-    RUTA_IMAGEN_CONTENEDORA,
-    RUTA_DATOS_CIFRADOS_DESOCULTACION,
-    RUTA_DATOS_CIFRADO,
-    RUTA_IMAGEN_CONTENEDORA_DESOCULTACION_DESTRANSFORMADA,
-    RUTA_IMAGEN_CONTENEDORA_SIN_TRANSFORMAR,
-)
+from constantes import constantes
 import cv2
 import numpy as np
 from pitea.mensajes import print
@@ -98,20 +92,20 @@ class OcultadorImagen(ABC):
             PIL.Image: Imagen con los datos ocultos.
             str: Formato de la imagen.
         """
-        with open(RUTA_DATOS_CIFRADO, "rb") as f:
+        with open(constantes.RUTA_DATOS_CIFRADO, "rb") as f:
             datos = f.read()
 
         imagen, formato = self.ocultar(datos, altura_imagen, anchura_imagen)
 
-        imagen.save(str(RUTA_IMAGEN_CONTENEDORA_SIN_TRANSFORMAR) % formato)
+        imagen.save(str(constantes.RUTA_IMAGEN_CONTENEDORA_SIN_TRANSFORMAR) % formato)
 
         # Ocultar el texto realizando transformaciones con inversa a la imagen
         imagen = self.transformar_imagen(imagen)
 
-        imagen.save(str(RUTA_IMAGEN_CONTENEDORA) % formato)
+        imagen.save(str(constantes.RUTA_IMAGEN_CONTENEDORA) % formato)
 
         print(
-            f"Imagen contenedora guardada en {str(RUTA_IMAGEN_CONTENEDORA) % formato}"
+            f"Imagen contenedora guardada en {str(constantes.RUTA_IMAGEN_CONTENEDORA) % formato}"
         )
 
         return imagen, formato
@@ -123,13 +117,13 @@ class OcultadorImagen(ABC):
             None
         """
         self.imagen = self.transformar_imagen_inversa(self.imagen)
-        self.imagen.save(str(RUTA_IMAGEN_CONTENEDORA_DESOCULTACION_DESTRANSFORMADA) % self.formato)
+        self.imagen.save(str(constantes.RUTA_IMAGEN_CONTENEDORA_DESOCULTACION_DESTRANSFORMADA) % self.formato)
         datos_extraidos = self.desocultar()
 
-        with open(RUTA_DATOS_CIFRADOS_DESOCULTACION, "wb") as f:
+        with open(constantes.RUTA_DATOS_CIFRADOS_DESOCULTACION, "wb") as f:
             f.write(datos_extraidos)
 
-        print(f"Datos cifrados guardados en {RUTA_DATOS_CIFRADOS_DESOCULTACION}")
+        print(f"Datos cifrados guardados en {constantes.RUTA_DATOS_CIFRADOS_DESOCULTACION}")
 
     def transformar_imagen(self, imagen):
         """Aplica transformaciones a la imagen para ocultar los datos de manera no obvia.

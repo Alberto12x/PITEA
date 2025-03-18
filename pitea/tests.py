@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import subprocess 
 import os
 from PIL import Image
@@ -50,7 +51,7 @@ def ejecutar_comando(command):
         print(f"Se ha guardado stderr en: {stderr_temp_path}")
     except subprocess.CalledProcessError as e:
         # Si el comando falla, mostramos un mensaje indicando el error
-        print(f"❌ El comando falló. Los detalles del error están en:")
+        print("❌ El comando falló. Los detalles del error están en:")
         print(f"   stdout guardado en: {stdout_temp_path}")
         print(f"   stderr guardado en: {stderr_temp_path}")
         print(f"   Error: {e.stderr}")
@@ -86,7 +87,7 @@ def  test_transformada():
     assert list(imagen_original.getdata()) == list(imagen_revertida.getdata()), " Las transformaciones no son reversibles."
     print("✅ Prueba de transformación completamente reversible, completada con éxito \n")
 
-def test_ocultar_desocultar_lsb():
+def test_ocultar_desocultar_aes_lsb_lsb():
     """
     Realiza una prueba de ocultar y desocultar datos, cifrados con AES  y usando LSB (Least Significant Bit) en imágenes y audio.
 
@@ -130,6 +131,52 @@ def test_ocultar_desocultar_lsb():
     os.remove("archivos_prueba/datos_desocultos.txt")
     os.remove("archivos_prueba/audio_salida.wav")
 
+
+def test_ocultar_desocultar_none_lsb_lsb():
+    """
+    Realiza una prueba de ocultar y desocultar datos, cifrados con AES  y usando LSB (Least Significant Bit) en imágenes y audio.
+
+    - Ejecuta el comando para ocultar datos en la imagen y audio.
+    - Ejecuta el comando para desocultar los datos.
+    - Compara los archivos originales y los desocultos para verificar que son iguales.
+
+    Raises:
+        AssertionError: Si los archivos originales y desocultos no coinciden.
+    """
+    command = [
+        "python3", SCRIPT_PATH, "ocultar",
+        "--modo-cifrado", "none",
+        "--modo-cifrado-imagen", "lsb",
+        "--modo-cifrado-audio", "lsb",
+        "--contraseña", "prueba123",
+        "-i", "archivos_prueba/prueba.txt",
+        "--input_imagen", "archivos_prueba/imagen.png", 
+        "--input_audio", "archivos_prueba/audio.wav",  
+        "-o", "archivos_prueba/audio_salida.wav",
+        "-v"
+    ]
+    ejecutar_comando(command)
+
+    command = [
+        "python3", SCRIPT_PATH, "desocultar",
+        "--modo-cifrado", "none",
+        "--modo-cifrado-imagen", "lsb",
+        "--modo-cifrado-audio", "lsb",
+        "--input_audio", "archivos_prueba/audio_salida.wav",
+        "-o", "archivos_prueba/datos_desocultos.txt",
+        "--contraseña", "prueba123",
+        "-v"
+    ]
+    ejecutar_comando(command)
+    
+    with open("archivos_prueba/prueba.txt", "rb") as file1, open("archivos_prueba/datos_desocultos.txt", "rb") as file2:
+        assert file1.read() == file2.read(), "Los archivos no son iguales"
+    
+    print("✅ Prueba de ocultar y desocultar completada con éxito")
+    os.remove("archivos_prueba/datos_desocultos.txt")
+    os.remove("archivos_prueba/audio_salida.wav")
+
+
 #def test_ocultar_desocultar_sstv():
     
 # Ejecutar los casos de prueba
@@ -150,7 +197,10 @@ def run_tests():
         print("Ejecutando pruebas... \n")
 
         print("🧪 Prueba de ocultar y desocultar con cifrado AES y LSB")
-        test_ocultar_desocultar_lsb()
+        test_ocultar_desocultar_aes_lsb_lsb()
+        print("🧪 Prueba de ocultar y desocultar con cifrado None y LSB")
+        test_ocultar_desocultar_none_lsb_lsb()
+        print("🧪 Prueba transformada de imagenes")
         test_transformada()
         
 

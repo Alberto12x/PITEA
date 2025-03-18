@@ -2,10 +2,12 @@ import base64
 import numpy as np
 from pitea.imagen.OcultadorImagen import OcultadorImagen
 from PIL import Image, ImageDraw, ImageFont
-from pitea.constantes import ARCHIVO_CONFIG, FORMATO_IMAGEN_OCULTACION, RUTA_DATOS_OCULTADOR_IMAGEN_TEXT
+from constantes import constantes
 from pitea.utils import cargar_configuracion
 import easyocr
 import pytesseract
+from pitea.mensajes import print
+
 
 class OcultadorImagenText(OcultadorImagen):
     """
@@ -52,13 +54,13 @@ class OcultadorImagenText(OcultadorImagen):
             datos = datos.decode('utf-8')
 
         # Guardamos los datos en un archivo de texto
-        with open(RUTA_DATOS_OCULTADOR_IMAGEN_TEXT, 'w') as f:
+        with open(constantes.RUTA_DATOS_OCULTADOR_IMAGEN_TEXT, 'w') as f:
             f.write(datos)
 
-        print(f"Datos escritos en {RUTA_DATOS_OCULTADOR_IMAGEN_TEXT}")
+        print(f"Datos escritos en {constantes.RUTA_DATOS_OCULTADOR_IMAGEN_TEXT}")
         
         # Cargamos la configuración
-        conf = cargar_configuracion(ARCHIVO_CONFIG)
+        conf = cargar_configuracion(constantes.ARCHIVO_CONFIG)
         tamaño_fuente = conf['Ajustes_ocultador_imagen_text']["tamanio_fuente"]
         anchura_maxima = conf['Ajustes_ocultador_imagen_text']["anchura_maxima"]
         ruta_fuente = conf['Ajustes_ocultador_imagen_text']["ruta_fuente"]
@@ -113,7 +115,7 @@ class OcultadorImagenText(OcultadorImagen):
             dibujo.text((10, posicion_y), linea, font=fuente, fill='black')
             posicion_y += altura_linea
 
-        return imagen, FORMATO_IMAGEN_OCULTACION
+        return imagen, constantes.FORMATO_IMAGEN_OCULTACION
 
     def desocultar(self):
         """
@@ -128,7 +130,7 @@ class OcultadorImagenText(OcultadorImagen):
             ValueError: Si el texto extraído no es una cadena válida de base64.
         """
         # Configurar si se usará la GPU
-        gpu = True if cargar_configuracion(ARCHIVO_CONFIG)['Ajustes_ocultador_imagen_text']["gpu"] == "True" else False
+        gpu = True if cargar_configuracion(constantes.ARCHIVO_CONFIG)['Ajustes_ocultador_imagen_text']["gpu"] == "True" else False
 
         if self.cifrado:
             # Convertir la imagen a un array de NumPy

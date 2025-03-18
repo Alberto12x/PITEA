@@ -1,12 +1,7 @@
 from abc import ABC, abstractmethod
 import wave
-from pitea.constantes import (
-    FORMATO_AUDIO_OCULTACION,
-    FORMATO_IMAGEN_DESOCULTACION,
-    RUTA_IMAGEN_CONTENEDORA,
-    RUTA_AUDIO_CONTENEDOR,
-    RUTA_IMAGEN_DESOCULTACION,
-)
+from constantes import constantes
+from pitea.mensajes import print
 
 
 class OcultadorAudio(ABC):
@@ -81,13 +76,13 @@ class OcultadorAudio(ABC):
             formato_imagen (str): Formato de la imagen a ocultar.
             ruta_salida (str, optional): Ruta personalizada para guardar el audio modificado.
         """
-        with open(str(RUTA_IMAGEN_CONTENEDORA) % formato_imagen, "rb") as img_file:
+        with open(str(constantes.RUTA_IMAGEN_CONTENEDORA) % formato_imagen, "rb") as img_file:
             datos_imagen = img_file.read()
 
         frames = self.ocultar(datos_imagen)
 
         # Guardar en la ruta por defecto
-        self.guardar(str(RUTA_AUDIO_CONTENEDOR) % FORMATO_AUDIO_OCULTACION, frames)
+        self.guardar(str(constantes.RUTA_AUDIO_CONTENEDOR) % constantes.FORMATO_AUDIO_OCULTACION, frames)
 
         # Guardar en la ruta personalizada si se especifica
         if ruta_salida:
@@ -99,7 +94,7 @@ class OcultadorAudio(ABC):
         """
         datos_extraidos = self.desocultar()
 
-        ruta_salida = str(RUTA_IMAGEN_DESOCULTACION) % FORMATO_IMAGEN_DESOCULTACION
+        ruta_salida = str(constantes.RUTA_IMAGEN_DESOCULTACION) % constantes.FORMATO_IMAGEN_DESOCULTACION
         with open(ruta_salida, "wb") as archivo_img:
             archivo_img.write(datos_extraidos)
 

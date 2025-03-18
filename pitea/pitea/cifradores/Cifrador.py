@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from pitea.constantes import RUTA_DATOS_CIFRADO, RUTA_DATOS_CIFRADOS_DESOCULTACION, RUTA_DATOS_LIMPIOS_DESOCULTACION
+from constantes import constantes
 from pitea.mensajes import print
 
 
@@ -78,10 +78,10 @@ class Cifrador(ABC):
 
         iv, datos_cifrados = self.cifrar(datos)
 
-        with open(RUTA_DATOS_CIFRADO, "wb") as f:
+        with open(constantes.RUTA_DATOS_CIFRADO, "wb") as f:
             f.write(iv + datos_cifrados)  # Escribir el IV al inicio del archivo
 
-        print(f"Archivo cifrado guardado en {RUTA_DATOS_CIFRADO}")
+        print(f"Archivo cifrado guardado en {constantes.RUTA_DATOS_CIFRADO}")
 
     def descifrar_guardar(self):
         """
@@ -94,16 +94,16 @@ class Cifrador(ABC):
         Raises:
             ValueError: Si los datos no se pueden descifrar correctamente.
         """
-        with open(RUTA_DATOS_CIFRADOS_DESOCULTACION, "rb") as f:
+        with open(constantes.RUTA_DATOS_CIFRADOS_DESOCULTACION, "rb") as f:
             datos = f.read()
 
         datos_descifrados = self.descifrar(datos)
 
         # Guardar los datos descifrados en el archivo de salida
-        with open(RUTA_DATOS_LIMPIOS_DESOCULTACION, "wb") as f:
+        with open(constantes.RUTA_DATOS_LIMPIOS_DESOCULTACION, "wb") as f:
             f.write(datos_descifrados)
 
-        print(f"Archivo descifrado guardado en {RUTA_DATOS_LIMPIOS_DESOCULTACION}")
+        print(f"Archivo descifrado guardado en {constantes.RUTA_DATOS_LIMPIOS_DESOCULTACION}")
 
         # Guardar los datos descifrados en el archivo de salida
         with open(self.ruta, "wb") as f:

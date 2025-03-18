@@ -1,10 +1,10 @@
+#!/usr/bin/env python3
 import click
+from constantes import constantes
 from pitea.main import flujo_de_trabajo_ocultar, flujo_de_trabajo_desocultar
-import pitea.constantes as constantes
 from pitea.mensajes import SEPARADOR
 from pitea.utils import comprobar_existencia_archivo
-from opciones_ocultadores import OPCIONES_CIFRADO, OPCIONES_DESOCULTACION_IMAGEN, OPCIONES_DESCOCULTACION_AUDIO,OPCIONES_OCULTACION_IMAGEN,OPCIONES_OCULTACION_AUDIO
-import os
+
 
 @click.group(context_settings=dict(help_option_names=["-h", "--help"]))
 def main():
@@ -16,26 +16,26 @@ def main():
 @click.option(
     "--modo-cifrado",
     type=click.Choice(
-        OPCIONES_CIFRADO
+        constantes.OPCIONES_CIFRADO
     ),  
     default="aes",
-    help=f"Modo de cifrado a utilizar.",
+    help="Modo de cifrado a utilizar.",
 )
 @click.option(
     "--modo-cifrado-imagen",
     type=click.Choice(
-        OPCIONES_OCULTACION_IMAGEN
+        constantes.OPCIONES_OCULTACION_IMAGEN
     ), 
     default="lsb",
-    help=f"Modo de ocultacion a usar en la imagen.",
+    help="Modo de ocultacion a usar en la imagen.",
 )
 @click.option(
     "--modo-cifrado-audio",
     type=click.Choice(
-        OPCIONES_OCULTACION_AUDIO
+        constantes.OPCIONES_OCULTACION_AUDIO
     ),  
     default="lsb",
-    help=f"Modo de ocultacion específico para audio.",
+    help="Modo de ocultacion específico para audio.",
 )
 @click.option(
     "-v",
@@ -83,7 +83,7 @@ def ocultar(
     verbose,
 ):
     """
-    Ejecuta la acción de ocultación utilizando los archivos especificados.
+    Ejecuta la acción de ocultación.
     """
 
     # activo el modo verbose o no
@@ -109,7 +109,6 @@ def ocultar(
         click.echo(f"Modo de cifrado: {modo_cifrado}")
         click.echo(f"Modo de cifrado de imagen: {modo_cifrado_imagen}")
         click.echo(f"Modo de cifrado de audio: {modo_cifrado_audio}")
-        click.echo(f"Contraseña: {contraseña}")
 
         click.echo(f"Archivo de entrada de texto: {input}")
         if input_imagen:
@@ -137,32 +136,38 @@ def ocultar(
 @click.option(
     "--modo-cifrado",
     type=click.Choice(
-        OPCIONES_CIFRADO
+        constantes.OPCIONES_CIFRADO
     ),  
     default="aes",
-    help=f"Modo de cifrado a utilizar."
+    help="Modo de cifrado a utilizar."
 )
 @click.option(
     "--modo-cifrado-imagen",
     type=click.Choice(
-        OPCIONES_DESOCULTACION_IMAGEN
+        constantes.OPCIONES_DESOCULTACION_IMAGEN
     ),  
     default="lsb",
-    help=f"Modo de ocultacion usado en la imagen.",
+    help="Modo de ocultacion usado en la imagen.",
 )
 @click.option(
     "--modo-cifrado-audio",
     type=click.Choice(
-        OPCIONES_DESCOCULTACION_AUDIO
+        constantes.OPCIONES_DESCOCULTACION_AUDIO
     ),  
     default="lsb",
-    help=f"Modo de ocultacion usado en el audio.",
+    help="Modo de ocultacion usado en el audio.",
 )
 @click.option(
     "-v",
     "--verbose",
     is_flag=True,
     help="Modo verbose , muestra mensajes del flujo.",
+)
+@click.option(
+    "-s",
+    "--streaming",
+    is_flag=True,
+    help="Modo streaming, captura el audio sstv en streaming en vez de pasarle un audio.",
 )
 @click.option(
     "--input_audio",
@@ -198,17 +203,21 @@ def desocultar(
     output,
     contraseña,
     verbose,
+    streaming
 ):
     """
-    Ejecuta la acción de desocultación utilizando los archivos especificados.
+    Ejecuta la acción de desocultación.
     """
 
     # activo el modo verbose o no
     if verbose:
         constantes.VERBOSE = True
+        # activo el modo streaming o no
+    if streaming:
+        constantes.STREAMING = True
 
-    #Se puede pasar o el de audio o el de imagen, los dos no y uno obligatorio
-    if not input_audio  and not input_imagen and not input_text :
+    #Se puede pasar o el de audio o el de imagen, los dos no y uno obligatorio a no ser que estemos e streaming
+    if not input_audio  and not input_imagen and not input_text and not constantes.STREAMING:
         click.BadOptionUsage("No se ha introducido nigún input")
     elif input_audio and input_imagen :
         click.BadOptionUsage("Solo se puede introducir input_imagen si no introduce input_audio")
@@ -222,18 +231,18 @@ def desocultar(
         click.echo(f"Modo de cifrado: {modo_cifrado}")
         click.echo(f"Modo de cifrado de imagen: {modo_cifrado_imagen}")
         click.echo(f"Modo de cifrado de audio: {modo_cifrado_audio}")
-        click.echo(f"Contraseña: {contraseña}")
+        click.echo(f"Streaming: {'Si' if constantes.STREAMING else 'No'}")
 
         if input_audio :
             click.echo(f"Archivo de entrada de audio: {input_audio}")
         if input_imagen:
             click.echo(f"Archivo de entrada de imagen: {input_imagen}")
 
-        click.echo(f"Archivo de salida de audio: {output}")
+        click.echo(f"Archivo de salida: {output}")
 
         print(SEPARADOR)
 
-        flujo_de_trabajo_desocultar(
+    flujo_de_trabajo_desocultar(
             modo_cifrado,
             modo_cifrado_imagen,
             modo_cifrado_audio,
@@ -242,6 +251,7 @@ def desocultar(
             input_text,
             output,
             contraseña,
+            streaming
         )
 
 

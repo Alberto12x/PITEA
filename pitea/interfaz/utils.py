@@ -1,11 +1,15 @@
-import subprocess
-import threading
 import itertools
 import os
 import time
-from interfaz.constantes import RESET, VERDE, ROJO, MORADO, SPINNING,YELLOW
+from constantes import constantes
 from prompt_toolkit import prompt
 from prompt_toolkit.completion import PathCompleter
+import sys
+sys.path.append("../../")  
+from script_ejecucion import main
+from click.testing import CliRunner
+
+
 
 
 archivo_completer = PathCompleter(expanduser=True)
@@ -29,11 +33,12 @@ def comprobar_directorio(mensaje):
     """
     while True:
         salida = prompt(mensaje, completer=archivo_completer).strip()
+        salida = os.path.expanduser(salida)  # Expande '~' a '/home/usuario/'
         directorio = os.path.dirname(salida)  # Extraer solo el directorio de la ruta
 
         if directorio == "" or os.path.exists(directorio):  
             return salida
-        print(ROJO + "❌ Error: La carpeta de salida no existe. Introduce una ruta válida." + RESET)
+        print(constantes.ROJO + "❌ Error: La carpeta de salida no existe. Introduce una ruta válida." + constantes.RESET)
 
 
 def comprobar_opcion(mensaje, opciones):
@@ -53,10 +58,10 @@ def comprobar_opcion(mensaje, opciones):
         ValueError: Si la opción ingresada no es válida.
     """
     while True:
-        opcion = input(YELLOW + mensaje + RESET).strip().lower()
+        opcion = input(constantes.YELLOW + mensaje + constantes.RESET).strip().lower()
         if opcion in opciones:
             return opcion
-        print(ROJO + "❌ Error: Opción inválida." + RESET)
+        print(constantes.ROJO + "❌ Error: Opción inválida." + constantes.RESET)
 
 
 def comprobar_archivo(mensaje):
@@ -79,7 +84,7 @@ def comprobar_archivo(mensaje):
         archivo = prompt( mensaje , completer=archivo_completer).strip()
         if os.path.exists(archivo):
             return archivo
-        print(ROJO + "❌ Error: El archivo no existe. Introduce una ruta válida." + RESET)
+        print(constantes.ROJO + "❌ Error: El archivo no existe. Introduce una ruta válida." + constantes.RESET)
 
 
 def spinner():
@@ -92,9 +97,9 @@ def spinner():
     El spinner se detiene cuando la variable global `SPINNING` es cambiada a False.
     """
     for cursor in itertools.cycle(['|', '/', '-', '\\']):
-        if not SPINNING:
+        if not constantes.SPINNING:
             break
-        print(MORADO + f"\rProcesando... {cursor}" +RESET, end="", flush=True)
+        print(constantes.MORADO + f"\rProcesando... {cursor}" +constantes.RESET, end="", flush=True)
         time.sleep(0.1)
 
 
@@ -115,24 +120,22 @@ def ejecutar_comando(comando):
     Raises:
         subprocess.CalledProcessError: Si ocurre un error durante la ejecución del comando.
     """
-    global SPINNING
-    SPINNING = True
 
-    # Iniciar el spinner en un hilo separado
-    hilo_spinner = threading.Thread(target=spinner)
-    hilo_spinner.start()
+    comando = comando[2:]
 
     try:
-        result = subprocess.run(comando, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, check=True)
-        SPINNING = False 
-        hilo_spinner.join() 
+        runner = CliRunner()
+        result = runner.invoke(main, comando)
+        print(result.output)
 
-        print(VERDE + "\r🟢 Proceso de " + comando[2] + " finalizado.\n" + RESET)
-        print(MORADO + "Podra encontrar el archivo en la ruta especificada.\n"+ RESET)
-        print(result.stdout)
-        input(MORADO + "Presione enter para continuar..."+ RESET)
-    except subprocess.CalledProcessError as error:
-        SPINNING = False
-        hilo_spinner.join()
-        print(ROJO +"\r❌ Error en la ejecución:\n" + RESET, error.stderr)
-        input(MORADO + "Presione enter para continuar..."+ RESET)
+        if result.exception:
+            raise result.exception 
+
+        print(constantes.VERDE + f"\r🟢 Proceso de {comando[0]} finalizado.\n" + constantes.RESET)
+        print(constantes.MORADO + "Podrá encontrar el archivo en la ruta especificada.\n" + constantes.RESET)
+        input(constantes.MORADO + "Presione enter para continuar..." + constantes.RESET)
+
+    except Exception as error:
+        print(constantes.ROJO + "\r❌ Error en la ejecución:\n" + constantes.RESET, error)
+        input(constantes.MORADO + "Presione enter para continuar..." + constantes.RESET)
+        raise error  

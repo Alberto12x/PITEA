@@ -1,5 +1,5 @@
 import os
-from interfaz.constantes import RESET, ROJO, CYAN, YELLOW,TITULO
+from constantes import constantes
 
 class MenuPrinter:
     """
@@ -30,14 +30,14 @@ class MenuPrinter:
         Returns:
             str: Opción seleccionada por el usuario.
         """
-        print(CYAN+ "╔══════════════════════════════════╗")
+        print(constantes.CYAN+ "╔══════════════════════════════════╗")
         print("║        ¿Qué desea hacer?         ║")
         print("╠══════════════════════════════════╣")            
         for key, command in comandos.items():
             print(f"║  {key}️⃣   {command.descripcion.ljust(26)}  ║")
         print(f"║  {int(key) + 1}️⃣   Salir                       ║")
-        print("╚══════════════════════════════════╝"+ RESET)
-        opcion = input(YELLOW +"Seleccione una opción:" + RESET)
+        print("╚══════════════════════════════════╝"+ constantes.RESET)
+        opcion = input(constantes.YELLOW +"Seleccione una opción:" + constantes.RESET)
         return opcion
     
   
@@ -48,9 +48,9 @@ class MenuPrinter:
         Args:
             opcion (str): Nombre de la opción seleccionada.
         """
-        print(CYAN + "╔══════════════════════════════╗")
+        print(constantes.CYAN + "╔══════════════════════════════╗")
         print(f"║      {opcion.ljust(24)}║")
-        print("╚══════════════════════════════╝"+ RESET)
+        print("╚══════════════════════════════╝"+ constantes.RESET)
 
     
     def mostrar_titulo(self):
@@ -58,11 +58,11 @@ class MenuPrinter:
         Muestra el título de la aplicación, limpiando la pantalla antes.
         """
         os.system('cls' if os.name == 'nt' else 'clear')  # Limpia la pantalla antes de mostrar el menú
-        print(ROJO + TITULO + RESET)
+        print(constantes.ROJO + constantes.TITULO + constantes.RESET)
     
     
     def mostrar_salida(self):
         """
         Muestra el mensaje de salida al cerrar la aplicación.
         """
-        print(ROJO + "Saliendo..." + RESET)
+        print(constantes.ROJO + "Saliendo..." + constantes.RESET)

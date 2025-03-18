@@ -1,7 +1,9 @@
+#!/usr/bin/env python3
 from interfaz.Invoker import Invoker
 from interfaz.comandos.OcultarArchivoCommand import OcultarArchivoCommand
 from interfaz.comandos.DesocultarArchivoCommand import DesocultarArchivoCommand
 from interfaz.MenuPrinter import MenuPrinter
+from constantes import constantes
 
 
 def menu():
@@ -32,7 +34,8 @@ def menu():
         elif opcion < str(idx+1) and opcion > "0":
             inv.ejecutar_comando(opcion)                              #ejecutamos el comando seleccionado
         else:
-            print("Opción inválida.")                              
+            print("Opción inválida.")     
+        constantes.actualizar_cache()                   
         
 
 if __name__ == "__main__":

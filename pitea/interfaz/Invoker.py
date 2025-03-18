@@ -1,5 +1,4 @@
-
-from interfaz.constantes import RESET, ROJO
+from constantes import constantes
 
 #clase para invocar comandos
 class Invoker:
@@ -60,4 +59,4 @@ class Invoker:
         if nombre in self.comandos:
             self.comandos[nombre].ejecutar()
         else:
-            print(ROJO + "Comando no reconocido." + RESET)
+            print(constantes.ROJO + "Comando no reconocido." + constantes.RESET)

@@ -1,8 +1,10 @@
 
 from interfaz.comandos.command import Command
-from interfaz.constantes import OPCIONES_CIFRADOS,OPCIONES_MODO_IMAGEN,OPCIONES_MODO_AUDIO,OPCIONES_VERBOSE,SCRIPT_PATH,RESET,YELLOW
+from constantes import constantes
 from interfaz.utils import ejecutar_comando,comprobar_opcion,comprobar_archivo,comprobar_directorio
 from interfaz.MenuPrinter import MenuPrinter
+from getpass import getpass
+
 
 class OcultarArchivoCommand(Command):
     """
@@ -45,12 +47,21 @@ class OcultarArchivoCommand(Command):
 
         imagen = ""
         audio = ""
+        contraseña=""
 
         # Solicitar modos de cifrado y ocultación
-        modo_cifrado =  comprobar_opcion(f"🔒 Modo de cifrado del texto ({'/'.join(OPCIONES_CIFRADOS)}): ", OPCIONES_CIFRADOS)
-        modo_imagen = comprobar_opcion(f"🖼️  Modo de ocultacion en imagen ({'/'.join(OPCIONES_MODO_IMAGEN)}): ", OPCIONES_MODO_IMAGEN)
-        modo_audio =  comprobar_opcion(f"🎵 Modo de ocultacion en audio ({'/'.join(OPCIONES_MODO_AUDIO)}): ", OPCIONES_MODO_AUDIO)
-        contraseña = input(YELLOW + "🔑 Contraseña: " + RESET).strip()
+        modo_cifrado =  comprobar_opcion(f"🔒 Modo de cifrado del texto ({'/'.join(constantes.OPCIONES_CIFRADO)}): ", constantes.OPCIONES_CIFRADO)
+        modo_imagen = comprobar_opcion(f"🖼️  Modo de ocultacion en imagen ({'/'.join(constantes.OPCIONES_OCULTACION_IMAGEN)}): ", constantes.OPCIONES_OCULTACION_IMAGEN)
+        modo_audio =  comprobar_opcion(f"🎵 Modo de ocultacion en audio ({'/'.join(constantes.OPCIONES_OCULTACION_AUDIO)}): ", constantes.OPCIONES_OCULTACION_AUDIO)
+        if modo_cifrado != "none" :
+            while True :
+                contraseña = getpass(constantes.YELLOW + "🔑 Contraseña: " + constantes.RESET).strip()
+                contraseña_conf = getpass(constantes.YELLOW + "🔑 Introduzca de nuevo al contraseña: " + constantes.RESET).strip()
+                if contraseña == contraseña_conf : 
+                    break
+                else : 
+                    print(constantes.ROJO +"Las contraseñas introducidad no coinciden"+constantes.RESET)
+
         archivo =   comprobar_archivo("📂 Ruta del archivo a ocultar: ")
        
          # Si el modo de imagen es 'lsb', se solicita una imagen
@@ -63,15 +74,14 @@ class OcultarArchivoCommand(Command):
            
         # Solicitar la ruta de salida y el modo verbose
         salida = comprobar_directorio("💾 Ruta del audio de salida: ")
-        verbose = comprobar_opcion(f"📢 Modo verbose ({'/'.join(OPCIONES_VERBOSE)}): ", OPCIONES_VERBOSE)
+        verbose = comprobar_opcion(f"📢 Modo verbose ({'/'.join(constantes.OPCIONES_VERBOSE)}): ", constantes.OPCIONES_VERBOSE)
         
         # Construir el comando
         comando = [
-            "python3", SCRIPT_PATH, "ocultar",
+            "python3", constantes.SCRIPT_PATH, "ocultar",
             "--modo-cifrado", modo_cifrado,
             "--modo-cifrado-imagen", modo_imagen,
             "--modo-cifrado-audio", modo_audio,
-            "--contraseña", contraseña,
             "-i", archivo,
             "-o", salida
         ]
@@ -83,6 +93,8 @@ class OcultarArchivoCommand(Command):
             comando.extend(["--input_audio", audio])
         if verbose == "s":
             comando.extend(["-v"])
+        if contraseña:
+           comando.extend(["--contraseña", contraseña])
         
         # Ejecutar el comando
         ejecutar_comando(comando)
