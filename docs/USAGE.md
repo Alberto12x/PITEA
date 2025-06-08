@@ -110,11 +110,10 @@ python3 script_ejecucion.py desocultar \
 #### Llamada en la CLI
 
 ![Ejemplo de uso de la CLI para ocultación con LSB. Captura de pantalla
-de la herramienta.](Imagenes/C/o_lsb.png){#fig:proceso2 width="60%"}
+de la herramienta.](Imagenes/C/o_lsb.png)}
 
 ![Ejemplo de uso de la CLI para desocultación con LSB. Captura de
-pantalla de la herramienta.](Imagenes/C/d_lsb.png){#fig:proceso2
-width="60%"}
+pantalla de la herramienta.](Imagenes/C/d_lsb.png)
 
 ### SSTV
 
@@ -130,13 +129,13 @@ python3 script_ejecucion.py ocultar \
 ```
 
 ![Ejemplo de uso de la CLI para ocultación con SSTV. Captura de pantalla
-de la herramienta.](Imagenes/C/o_sstv.png){#fig:proceso2 width="50%"}
+de la herramienta.](Imagenes/C/o_sstv.png)
 
 Para la desocultación de esta subsección es necesario configurar QSSTV.
 Es marcar la casilla del *autoslant*.
 
 ![Marcar *autoslant*. Captura de pantalla de
-QSSTV.](Imagenes/C/autoslant.png){#fig:proceso2 width="60%"}
+QSSTV.](Imagenes/C/autoslant.png)
 
 #### Desocultación desde imagen
 
@@ -153,14 +152,14 @@ python3 script_ejecucion.py desocultar \
 
 ![Ejemplo de uso de la CLI para desocultación con SSTV usando una imagen
 ya decodificada de SSTV. Captura de pantalla de la
-herramienta.](Imagenes/C/d_i_sstv.png){#fig:proceso2 width="50%"}
+herramienta.](Imagenes/C/d_i_sstv.png)
 
 #### Desocultación desde audio
 
 Es necesario configurar QSSTV para que reciba el audio desde un archivo.
 
 ![Configuración QSSTV para lectura desde archivos. Capturas de pantalla
-de QSSTV.](Imagenes/C/conf_file.png){#fig:proceso2 width="100%"}
+de QSSTV.](Imagenes/C/conf_file.png)
 
 ``` bash
 python3 script_ejecucion.py desocultar \
@@ -174,8 +173,7 @@ python3 script_ejecucion.py desocultar \
 ```
 
 ![Ejemplo de uso de la CLI para desocultación con SSTV. Captura de
-pantalla de la herramienta.](Imagenes/C/d_sstv.png){#fig:proceso2
-width="50%"}
+pantalla de la herramienta.](Imagenes/C/d_sstv.png)
 
 #### Desocultación desde audio streaming
 
@@ -183,8 +181,7 @@ Es necesario configurar QSSTV para que reciba el audio desde la tarjeta
 de sonido del dispositivo.
 
 ![Configuración QSSTV para lectura desde la tarjeta de sonido. Capturas
-de pantalla de QSSTV.](Imagenes/C/conf_sound.png){#fig:proceso2
-width="100%"}
+de pantalla de QSSTV.](Imagenes/C/conf_sound.png)
 
 ``` bash
 python3 script_ejecucion.py desocultar \
@@ -199,7 +196,7 @@ python3 script_ejecucion.py desocultar \
 
 ![Ejemplo de uso de la CLI para desocultación con SSTV en modo
 *streaming*. Captura de pantalla de la
-herramienta.](Imagenes/C/d_s_sstv.png){#fig:proceso2 width="50%"}
+herramienta.](Imagenes/C/d_s_sstv.png)
 
 #### Desocultación desde Base64
 
@@ -216,7 +213,7 @@ python3 script_ejecucion.py desocultar \
 
 ![Ejemplo de uso de la CLI para desocultación con SSTV iniciando con un
 archivo que contiene información en base64. Captura de pantalla de la
-herramienta.](Imagenes/C/d_64_sstv.png){#fig:proceso2 width="50%"}
+herramienta.](Imagenes/C/d_64_sstv.png)
 
 ## Documentación del archivo de configuración, "configuracion.toml"
 
