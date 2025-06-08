@@ -1,6 +1,6 @@
 # Guía de instalación 
 
-En este apéndice se mostrará dónde descargar la aplicación y se
+En este documento se mostrará dónde descargar la aplicación y se
 explicará su instalación en Linux.\
 Se ha comprobado su funcionamiento en Debian, en la primera iso
 descargable en:
