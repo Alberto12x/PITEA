@@ -1,0 +1,47 @@
+\chapter{Conclusiones y Trabajo Futuro}
+\label{cap:conclusiones}
+
+\section{Conclusiones de la herramienta}
+\label{susec:con}
+
+Tras finalizar la herramienta y  mirar hacia atrás pasando por cada uno de los capítulos de este documento, se puede concluir que se ha creado una herramienta por línea
+de comandos modular y funcional cuyo propósito es combinar criptografía y esteganografía para poder comunicarse de manera secreta en la red pública. Para justificar esta conclusión, se recordarán los objetivos definidos en la sección \ref{sec:ob}:
+
+\begin{itemize}
+    \item \textbf{Creación de una CLI (\textit{Command-line interface})}:
+    
+    Diagrama de clases y explicación en el capítulo~\ref{cap:descripcionTrabajo}.
+    \item \textbf{Implementación de algoritmos para la ocultación y desocultación tanto de texto en imagen como de imagen en audio}:
+    
+    Explicados en el capítulo~\ref{cap:descripcionTrabajo} donde se puede ver que hemos implementado algoritmos basados en el uso de LSB, basado en el plasmado de texto en imagen y transformándolo para que no sea visible y basados en la transformación de archivos en ondas acústicas.
+    \item \textbf{Tratamiento de ondas acústicas en la informática}: 
+    
+    Explicado en la sección~\ref{sec:audioo}.
+    \item \textbf{Uso de criptografía de clave secreta}: 
+    
+    Explicado sus bases en la sección~\ref{sec:cripto} y explicando su implementación en el capítulo~\ref{cap:descripcionTrabajo}.
+\end{itemize}
+
+
+\section{ Trabajo futuro}
+\label{subsec:tf}
+ 
+Mirando al futuro y con la objetividad de que todo es posible de mejorar, hay varias cosas que mejorarían sin duda la herramienta:
+
+\begin{itemize}
+    \item Implementación de código corrector de errores, para evitar posibles ataques de intermediario y ruido en el canal de transmisión.
+    \item Implementación de algoritmos de ocultación para más formatos de archivos. Así se dispondría de más opciones a la hora de ocultar.
+    \item Posibilidad de añadir nuevos cifrados o ocultadores mediante \textit{plugins} sencillos para cualquier usuario.
+    \item Diseño de una GUI (\textit{Graphical User Interface}) para ser más amigable con el público que no disponga de conocimientos para utilizar la herramienta mediante la CLI.
+    \item Implementación de un decodificador para SSTV para evitar abrir QSSTV y que sea el proceso automático.
+    \item Implementación de un motor OCR (\textit{Optical Character Recognition}) específico para una tipografía propia y específico para nuestro contexto, letras negras en un fondo blanco.  
+    \item Análisis del \textit{OcultadorText} más potente, generando un \textit{dataset} mucho más grande utilizando \textit{PySpark} y algún servicio en la nube como GCP (\textit{Google Cloud Console}).
+    \item Implementación de técnicas basadas en el dominio de la transformación.
+    \item Uso de criptografía pública para el intercambio de claves secretas.
+
+
+    
+\end{itemize}
+
+
+

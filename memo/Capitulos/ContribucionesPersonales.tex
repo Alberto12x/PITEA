@@ -1,0 +1,72 @@
+\chapter*{Contribuciones Personales}
+\markboth{Contribuciones Personales}{}
+\label{cap:contribucionesPersonales}
+\addcontentsline{toc}{chapter}{Contribuciones Personales}
+
+\section*{Alberto Martín Oruña}
+
+Durante el desarrollo del proyecto, realicé diversas contribuciones en todas las etapas del plan de trabajo, subsección \ref{sec:trab}.\\
+
+En lo relativo a la etapa 1, subapartado \ref{subsec:1}, mi labor fue la búsqueda de información sobre los orígenes de la esteganografía, fundamentos y bases de la criptografía de clave secreta y de clave pública, además de la transmisión de datos mediante SSTV. Para todo ello, pasé gran parte del tiempo que le dediqué a esta etapa leyendo y entendiendo \cite{carracedo2004}.\\
+
+
+Posteriormente, me ocupé de la redacción de esos temas en el capítulo \ref{cap:estadoDeLaCuestion}, así como de la elaboración de las figuras y tablas de esas secciones. También redacté la motivación del proyecto, subsección \ref{sec:mt}.\\
+
+En cuanto a la etapa 2, subapartado \ref{subsec:2}, implementé en Python un programa lineal que utilizaba los algoritmos del \textit{ocultadorText}, ocultación mediante la incrustación del texto en la imagen y desocultación usando motores OCR; y \textit{ocultadorSSTV}, paso de la imagen a onda acústica y su decodificación. Para ello, investigué sobre aplicaciones que implementaran decodificadores para SSTV y su integración en el código.\\
+
+En la etapa 3, subapartado \ref{subsec:3}, separé en módulos todo el código existente hasta el momento, diseñando la estructura del proyecto, clases, secuencias y métodos.\\
+
+Además, añadí nuevos módulos para la lectura de los argumentos y control de los flujos principales; también añadí las constantes, archivo de configuración, creación y actualización de la caché.\\
+
+En esta misma etapa, tras modularizar el código, realizamos otra revisión para ver posibles mejoras, donde automaticé el uso de QSSTV en la herramienta, solucionando un problema de variables de entorno que impedía abrir ventanas emergentes, se resolvió limpiando el entorno antes de iniciar QSSTV, también arreglé un error en la transformadas de las imágenes ya que con imágenes de dimensiones impares fallaba.
+\\
+
+En la etapa 4, subapartado \ref{subsec:4}, ayudé a mi compañero con lo pertinente de la etapa 3, diseño de directorios de ese módulo, clases y secuencias.\\
+
+En la etapa 5,  subapartado \ref{subsec:5}, desarrollé pruebas utilizando las ya existentes de mi compañero para comprobar que la herramienta funcionaba correctamente con imágenes de dimensiones impares, verificando todas las combinaciones posibles de paridad, además de probar con imágenes codificadas en RGBA, ya que hasta ese momento solo habíamos probado con RGB.\\
+
+En esta etapa, además, llevé a cabo todas las pruebas documentadas en el capítulo \ref{cap:pruebasExpirementales}, así como su documentación, incluyendo generación de \textit{datasets}, análisis de estos, generación de archivos portadores y difusión a través de la red pública.\\
+
+Durante las pruebas de campo, me fijé que había un problema con las imágenes codificadas en RGBA, ya que ciertas imágenes al ser convertidas a RGB, mostraban líneas de colores en sus antiguos píxeles transparentes, lo que indicaba  que la imagen no era una imagen ``normal''. Lo arreglé estableciendo  todos los píxeles con transparencia máxima a negro y sin transparencia antes de la ocultación.  \\
+
+En la etapa 6, subapartado \ref{subsec:6}, dediqué  mucho tiempo en revisar erratas, redacté la sección de conclusiones de la herramienta, subsección \ref{susec:con}, algunos puntos del trabajo futuro, \ref{subsec:tf} y los apéndices \ref{Appendix:Key1}, incluyendo el desarrollo y comprobación del correcto funcionamiento del código referido en ese apéndice; \ref{Appendix:Key2} y \ref{Appendix:Fuentes}.\\
+
+Para el desarrollo del apéndice \ref{Appendix:Key1} elaboré  un \textit{script} en bash que se encarga de verificar, resolver o avisar todas las dependencias del proyecto. Además de comprobar su validez en una máquina virtual con sistema operativo Debian, esta máquina solo tenía instalados los programas propios de su instalación en el equipo.\\ 
+
+
+Para el desarrollo del apéndice \ref{Appendix:Key2}, recopilé en este documento la información sobre las llamadas a la herramienta que habíamos usado para validarla a lo largo del proyecto, además de realizar capturas de pantalla de la herramienta para mostrar esas mismas funcionalidades pero utilizando  la CLI.
+\newpage
+\section*{Rodrigo Gallego Marín}
+Durante el desarrollo del presente proyecto, he llevado a cabo una gran variedad de tareas que abarcan desde la investigación previa y la planificación hasta la implementación, documentación y validación de los resultados. Estas contribuciones han sido muy importantes en la evolución del trabajo y en la consolidación de una herramienta funcional, modular y adaptable.\\
+
+En las etapas iniciales, una de mis primeras tareas fue pasar la introducción del proyecto de  un documento de Google Docs al formato LaTeX. Este paso permitió empezar a hacer la memoria en un formato más profesional y limpio.\\
+
+En la fase de investigación, comencé buscando información sobre los métodos de codificación y decodificación tanto de imágenes como de audio, ya que vamos a trabajar sobre este tipo de archivos. También fui responsable de redactar esta información en la correspondiente sección del estado de la cuestión.\\
+
+A continuación, me centré especialmente en comprender a fondo los principios de la esteganografía digital, desde qué medios hay hasta las técnicas existentes. Dentro de las distintas técnicas de ocultación, le puse especial énfasis al uso de bits menos significativos (LSB) y su aplicación tanto en imágenes como en audio. Paralelamente, investigué qué formatos de audio permiten ocultar imágenes, determinando sus ventajas y limitaciones en términos de compresión.\\
+
+Durante la implementación, realicé pruebas iniciales del código, centrándome en comprobar la viabilidad de ocultar información utilizando LSB. Experimenté con distintas variantes: el uso de marcadores dentro del flujo de bits, que no resultó viable, y la inclusión de cabeceras que indican el tamaño del contenido oculto. Esto permitió establecer una estructura más robusta para la recuperación de datos.\\
+
+Posteriormente, desarrollé y adapté los algoritmos de ocultación y recuperación basados en LSB, tanto para imágenes como para audio. Complementariamente, implementé un mecanismo de cifrado para proteger el contenido antes de ocultarlo, aumentando la seguridad ante análisis forenses o accesos no autorizados. Esto llevó a un script funcional con el cual se pudo ocultar y desocultar un mensaje de manera correcta.\\
+
+Una de las mejoras que introduje fue la creación de una transformada para aplicar sobre la imagen original antes del ocultado, cuyo objetivo es desordenar los píxeles antes de aplicar la ocultación, haciendo más difícil detectar visualmente patrones que puedan delatar la presencia de información. Esta transformación se diseñó de forma reversible, de modo que tras la recuperación se puede reordenar la imagen original sin pérdida.\\
+
+Para validar el sistema, realicé pruebas de transmisión mediante SSTV (Slow Scan Television), un protocolo que convierte imágenes en sonido. En estas pruebas oculté archivos cifrados dentro de imágenes mediante LSB y los transmití en forma de audio, evaluando la pérdida de información al recibir de vuelta la imagen. Estos ensayos fueron clave para analizar que no es viable transmitir una imagen con un mensaje oculto por LSB ya que, al recuperarla, no hay forma de recuperar el mensaje debido al ruido, lo que nos llevó a plantearnos otras alternativas.\\
+
+Además, desarrollé un script de tests automáticos para verificar la integridad del sistema tras cada modificación del código. Esto permitió detectar errores de forma temprana y agilizó el proceso de desarrollo ya que, tras cualquier cambio, se verificaba que se siguiera ocultando y desocultando correctamente.\\
+
+Otro bloque importante de mi contribución fue la creación de una interfaz por línea de comandos (CLI). Esta interfaz, compuesta por varias clases, permite al usuario ejecutar todas las funcionalidades del programa desde la terminal, de manera sencilla e intuitiva.\\
+
+Además de crear la CLI, la integré para que funcionara de manera correcta con la herramienta, lo que requería de pruebas para verificar que todo siguiera funcionando. Además, también tuve que verificar que no se pudieran introducir valores erróneos que condujeran a comportamientos extraños del programa.\\
+
+También me encargué de la documentación interna del código, con comentarios explicativos de cada clase y de cada función para que quien quiera pueda entender la herramienta y qué hace cada clase. Esto permitirá en un futuro a la gente modificar el código con más facilidad. \\
+
+En cuanto a la arquitectura del sistema, investigué sobre la creación de diagramas tanto de clases como de secuencia debido al gran apoyo visual que serían en la descripción de la arquitectura del sistema. Después de informarme sobre cómo hacerlos, desarrollé tanto los diagramas de clases como los diagramas de secuencia, los diagramas de clases me sirvieron para poder explicar mejor cómo está el código estructurado y las diferentes funcionalidades de los ocultadores y cifradores que hay, los diagramas de secuencia me sirvieron más para reflejar el flujo de ejecución del programa tanto a la hora de ocultar como a la de desocultar.\\
+
+Después de terminar la herramienta, realice una comparación con herramientas existentes en el ámbito de la esteganografía, destacando las ventajas de nuestra solución sobre el resto. \\
+
+También, realicé una revisión de las tecnologías descartadas, incluyendo las ideas que en un principio parecían viables, pero que por motivos de rendimiento, compatibilidad o dificultad de integración no fueron utilizadas. Documentar estas decisiones resultó fundamental para dejar constancia del proceso de toma de decisiones técnicas y poder dar respuesta a su no integración en la herramienta.\\
+
+Como cierre, contribuí activamente a la definición de futuras líneas de trabajo, proponiendo mejoras como la implementación del código corrector de errores para más seguridad, contemplación de más formatos sobre los que ocultar datos, un sistema de plugins para que sea más sencillo añadir nuevos métodos de cifrado o ocultación y un diseño GUI para ser más amigable con los usuarios menos experimentados con la CLI.
+
+ 
