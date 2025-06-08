@@ -1,0 +1,15 @@
+\chapter{Tecnologías descartadas}
+\label{cap:Tecnologíasdescartadas}
+
+En este capítulo se describirán las tecnologías que han sido descartadas en la creación de la herramienta.\\                                                  
+
+\begin{itemize}
+    \item \textbf{Marcador en método LSB} 
+    
+    Se probó el uso de un marcador implementado mediante una secuencia de bits para determinar hasta qué píxel habría que leer en la desocultación LSB, el marcador se introducía a continuación de la secuencia de bits del secreto. Este método fue descartado ya que existía la posibilidad de que el secreto contuviera una secuencia de bits similar a los utilizados para representar el marcador, lo que llevaría  a la pérdida de datos. Supongamos que utilizamos como marcador la secuencia 010111010, pues existe la posibilidad de que la secuencia de bits que componen el secreto contenga esta secuencia de bits, lo que nos llevaría a no leer el secreto completo ya que abandonaríamos la lectura sin llegar al final.\\
+    
+\end{itemize}
+
+
+
+

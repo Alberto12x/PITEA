@@ -1,0 +1,48 @@
+\chapter{Guía de instalación}
+\label{Appendix:Key1}
+
+En este apéndice se mostrará dónde descargar la aplicación y se explicará su instalación en Linux.\\
+
+Se ha comprobado su funcionamiento en Debian, en la primera iso descargable en:
+\begin{minted}{bash}
+https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/
+\end{minted}
+
+Para descargar la aplicación es necesario clonar el repositorio de la herramienta, \url{https://github.com/Alberto12x/PITEA.git}. Se puede hacer de la siguiente manera:
+
+\begin{minted}{bash}
+git clone https://github.com/Alberto12x/PITEA.git
+ \end{minted}
+o descargando el archivo \texttt{.zip} del repositorio de \textit{GitHub}.\\
+
+Una vez clonado, es necesario entrar en el repositorio y ejecutar el archivo \texttt{install.sh}, dándole permisos de ejecución si fuera necesario:
+\begin{minted}{bash}
+cd TFG-PITEA-main
+chmod +x install.sh
+sudo ./install.sh
+\end{minted}
+Una vez instalado, se llama a la herramienta por terminal escribiendo:
+\begin{minted}{bash}
+pitea
+\end{minted}
+
+
+% Caja informativa tipo aviso
+\newtcolorbox{notaimportante}{
+  colback=yellow!10,      % fondo amarillo claro
+  colframe=yellow!50!black, % borde amarillo oscuro
+  title=Nota importante,
+  fonttitle=\bfseries,
+  coltitle=black,
+  sharp corners,
+  boxrule=0.5mm,
+  left=2mm,
+  right=2mm,
+  top=1mm,
+  bottom=1mm
+}
+
+% Luego en el cuerpo del documento:
+\begin{notaimportante}
+Es de tener en cuenta que si se usa una \textit{shell} con el AUTO\_CD activado como zsh si se escribe en la terminal \texttt{pitea} desde la raíz del proyecto no se ejecutará la herramienta sino que se ejecutará \texttt{cd pitea}.
+\end{notaimportante}

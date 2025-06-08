@@ -1,0 +1,104 @@
+\begin{thebibliography}{13}
+\expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
+
+\bibitem[{Carracedo~Gallardo(2004)}]{carracedo2004}
+{\sc Carracedo~Gallardo, J.}
+\newblock {\em Seguridad en redes telemáticas\/}.
+\newblock McGraw Hill, Madrid, 2004.
+
+\bibitem[{Iglesias(2015)}]{PabloyIglesias}
+{\sc Iglesias, P.~F.}
+\newblock Esteganografía, el arte de ocultar información sensible.
+\newblock {\em Pablo y Glesias - Blog\/}, 2015.
+\newblock Disponible en
+  \url{https://www.pabloyglesias.com/mundohacker-esteganografia/} (último
+  acceso,  Marzo, 2025).
+
+\bibitem[{{International\;Amateur\;Radio\;Union\;(IARU)\;Región\;2}(2019)}]{IARUEtica}
+{\sc {International\;Amateur\;Radio\;Union\;(IARU)\;Región\;2}}.
+\newblock Ética y buenas prácticas operativas para el radioaficionado.
+\newblock
+  \url{https://www.iaru-r1.org/wp-content/uploads/2019/10/2-ETHICS-OPERATING-IARU-R2spanish-final.pdf},
+  2019.
+\newblock Último acceso: 30 de marzo de 2025.
+
+\bibitem[{Kemp(2024)}]{wearesocial2024}
+{\sc Kemp, S.}
+\newblock 5 billones de usuarios en social media.
+\newblock 2024.
+\newblock Disponible en:
+  \url{https://wearesocial.com/es/blog/2024/01/digital-2024-5-billiones-de-usuarios-en-social-media/}.
+  Último acceso: 13 de marzo de 2025.
+
+\bibitem[{{Microsoft Corporation and IBM Corporation}(1991)}]{MicrosoftIBM1991}
+{\sc {Microsoft Corporation and IBM Corporation}}.
+\newblock Multimedia programming interface and data specifications 1.0.
+\newblock
+  \url{https://www.loc.gov/preservation/digital/formats/fdd/fdd000001.shtml},
+  1991.
+\newblock Especificación oficial del formato RIFF/WAVE desarrollada por
+  Microsoft e IBM. Referenciado por la Library of Congress. Último acceso: 22
+  de abril de 2025.
+
+\bibitem[{{National Institute of Standards and Technology
+  (NIST)}(2001)}]{NISTFIPS197}
+{\sc {National Institute of Standards and Technology (NIST)}}.
+\newblock Fips 197: Advanced encryption standard (aes).
+\newblock \url{Https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.197.pdf}, 2001.
+\newblock Último acceso: 10 de abril de 2025.
+
+\bibitem[{{National Institute of Standards and Technology
+  (NIST)}(2015)}]{NISTFIPS1804}
+{\sc {National Institute of Standards and Technology (NIST)}}.
+\newblock Fips pub 180-4: Secure hash standard (shs).
+\newblock \url{https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.180-4.pdf},
+  2015.
+\newblock Último acceso: 10 de abril de 2025.
+
+\bibitem[{{National Institute of Standards and Technology
+  (NIST)}(2019)}]{NISTSP80056BRev2}
+{\sc {National Institute of Standards and Technology (NIST)}}.
+\newblock Sp 800-56b revision 2: Recommendation for pair-wise key establishment
+  schemes using discrete logarithm cryptography.
+\newblock
+  \url{Https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-56Br2.pdf},
+  2019.
+\newblock Último acceso: 10 de abril de 2025.
+
+\bibitem[{Renau~Torres(2011)}]{renau2011}
+{\sc Renau~Torres, V.}
+\newblock {\em Compresión y restauración de imágenes por técnicas no
+  lineales\/}.
+\newblock Tesis Doctoral, Universitat de València, València, 2011.
+\newblock Dirección: Pep Mulet Mestre y Francesc Aràndiga Llaudes.
+
+\bibitem[{Rodríguez~Roca(2009)}]{rodriguez2009esteganografia}
+{\sc Rodríguez~Roca, F.~J.}
+\newblock {\em La esteganografía como técnica para garantizar la seguridad y
+  confidencialidad en la transmisión de datos\/}.
+\newblock Trabajo final de carrera, Universitat Oberta de Catalunya, 2009.
+\newblock Disponible en: \url{http://hdl.handle.net/10609/929}. Último acceso:
+  12 de marzo de 2025.
+
+\bibitem[{Russon(2015)}]{nyt2015}
+{\sc Russon, M.-A.}
+\newblock Isis and al-qaeda terrorists using ebay, reddit and porn to send
+  coded messages says mossad.
+\newblock {\em IBTimes UK\/}, 2015.
+\newblock Disponible en:
+  \url{https://www.ibtimes.co.uk/isis-al-qaeda-terrorists-using-ebay-reddit-porn-send-coded-messages-says-mossad-1490130}.
+  Último acceso: 18 de marzo de 2025.
+
+\bibitem[{Salas(2015)}]{salas2015}
+{\sc Salas, A.}
+\newblock {\em Los hombres que susurran a las máquinas: [hackers, espías e
+  intrusos en tu ordenador]\/}.
+\newblock Espasa Calpe, Madrid, 2015.
+
+\bibitem[{Stallings(2022)}]{Stallings2022}
+{\sc Stallings, W.}
+\newblock Cryptography and network security: Principles and practice.
+\newblock 2022.
+\newblock 8ª Edición, Prentice Hall.
+
+\end{thebibliography}

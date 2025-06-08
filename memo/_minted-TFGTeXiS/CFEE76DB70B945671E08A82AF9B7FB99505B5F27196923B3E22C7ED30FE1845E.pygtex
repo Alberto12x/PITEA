@@ -1,0 +1,13 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+Usage:\PYG{+w}{ }script\PYGZus{}ejecucion.py\PYG{+w}{ }\PYG{o}{[}OPTIONS\PYG{o}{]}\PYG{+w}{ }COMMAND\PYG{+w}{ }\PYG{o}{[}ARGS\PYG{o}{]}...
+
+\PYG{+w}{  }Herramienta\PYG{+w}{ }para\PYG{+w}{ }la\PYG{+w}{ }ocultacion\PYG{+w}{ }y\PYG{+w}{ }desocultacion\PYG{+w}{ }de\PYG{+w}{ }datos\PYG{+w}{ }en\PYG{+w}{ }imagen\PYG{+w}{ }y
+\PYG{+w}{  }audio.
+
+Options:
+\PYG{+w}{  }\PYGZhy{}h,\PYG{+w}{ }\PYGZhy{}\PYGZhy{}help\PYG{+w}{  }Show\PYG{+w}{ }this\PYG{+w}{ }message\PYG{+w}{ }and\PYG{+w}{ }exit.
+
+Commands:
+\PYG{+w}{  }desocultar\PYG{+w}{  }Ejecuta\PYG{+w}{ }la\PYG{+w}{ }acción\PYG{+w}{ }de\PYG{+w}{ }desocultación.
+\PYG{+w}{  }ocultar\PYG{+w}{     }Ejecuta\PYG{+w}{ }la\PYG{+w}{ }acción\PYG{+w}{ }de\PYG{+w}{ }ocultación.
+\end{Verbatim}

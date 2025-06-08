@@ -1,0 +1,5 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n+nb}{cd}\PYG{+w}{ }TFG\PYGZhy{}PITEA\PYGZhy{}main
+chmod\PYG{+w}{ }+x\PYG{+w}{ }install.sh
+sudo\PYG{+w}{ }./install.sh
+\end{Verbatim}

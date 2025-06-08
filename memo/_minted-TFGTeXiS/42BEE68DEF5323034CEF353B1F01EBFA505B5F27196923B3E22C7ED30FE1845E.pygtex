@@ -1,0 +1,10 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+python3\PYG{+w}{ }script\PYGZus{}ejecucion.py\PYG{+w}{ }desocultar\PYG{+w}{ }\PYG{l+s+se}{\PYGZbs{}}
+\PYG{+w}{  }\PYGZhy{}\PYGZhy{}modo\PYGZhy{}cifrado\PYG{+w}{ }aes\PYG{+w}{ }\PYG{l+s+se}{\PYGZbs{}}
+\PYG{+w}{  }\PYGZhy{}\PYGZhy{}modo\PYGZhy{}cifrado\PYGZhy{}imagen\PYG{+w}{ }text\PYG{+w}{ }\PYG{l+s+se}{\PYGZbs{}}
+\PYG{+w}{  }\PYGZhy{}\PYGZhy{}modo\PYGZhy{}cifrado\PYGZhy{}audio\PYG{+w}{ }sstv\PYG{+w}{ }\PYG{l+s+se}{\PYGZbs{}}
+\PYG{+w}{  }\PYGZhy{}\PYGZhy{}input\PYGZus{}audio\PYG{+w}{ }./archivos\PYGZus{}prueba/sstv.wav\PYG{+w}{ }\PYG{l+s+se}{\PYGZbs{}}
+\PYG{+w}{  }\PYGZhy{}o\PYG{+w}{ }./archivos\PYGZus{}prueba/datos\PYGZus{}desocultos\PYGZus{}text\PYGZus{}sstv.txt\PYG{+w}{ }\PYG{l+s+se}{\PYGZbs{}}
+\PYG{+w}{  }\PYGZhy{}\PYGZhy{}contraseña\PYG{+w}{ }qwqwqw\PYG{+w}{ }\PYG{l+s+se}{\PYGZbs{}}
+\PYG{+w}{  }\PYGZhy{}v
+\end{Verbatim}
