@@ -257,6 +257,90 @@ def desocultar(
             streaming
         )
 
+@main.command()
+@click.option(
+    "-v",
+    "--verbose",
+    is_flag=True,
+    help="Modo verbose , muestra mensajes del flujo.",
+)
+@click.option(
+    "-qra",
+    "--qra",
+    required=True,
+    help="Indicativo de la estación que envía la tarjeta QSL.",
+)
+@click.option(
+    "-qth",
+    "--qth",
+    required=True,
+    help="Ubicación de la estación que envía la tarjeta QSL.",
+)
+@click.option(
+    "-fecha",
+    "--fecha",
+    required=True,
+    help="Fecha de la comunicación.",
+)
+@click.option(
+    "-hora",
+    "--hora",
+    required=True,
+    help="Hora de la comunicación.",
+)
+@click.option(
+    "-freq",
+    "--freq",
+    required=True,
+    help="Frecuencia utilizada en la comunicación.",
+)
+@click.option(
+    "-modo",
+    "--modo",
+    required=True,
+    help="Modo de operación utilizado en la comunicación.",
+)
+@click.option(
+    "-rst",
+    "--rst",
+    required=True,
+    help="Informe de señal recibido durante la comunicación.",
+)
+def generar_tarjeta(verbose, qra, qth, fecha, hora, freq, modo, rst): 
+    """
+    Genera una tarjeta QSL con los datos proporcionados.
+    """
+    # activo el modo verbose o no
+    if verbose:
+        constantes.VERBOSE = True
+        # activo el modo streaming o no
+        constantes.STREAMING = True
+
+    if constantes.VERBOSE:
+        click.echo("Generando tarjeta QSL con los siguientes datos:")
+        click.echo(f"Indicativo: {constantes.QRA}")
+        click.echo(f"Ubicación: {constantes.QTH}")
+        click.echo(f"Fecha: {constantes.FECHA}")
+        click.echo(f"Hora: {constantes.HORA}")
+        click.echo(f"Frecuencia: {constantes.FREQ}")
+        click.echo(f"Modo: {constantes.MODO}")
+        click.echo(f"Informe de señal: {constantes.RST}")
+
+    # Ejecutar script
+    comando = [
+        "bash",
+        constantes.SCRIPT_GENERACION_QSL,
+        qra,
+        qth,
+        fecha,
+        hora,
+        freq,
+        modo,
+        rst
+    ]
+
+
+
 
 if __name__ == "__main__":
     main()

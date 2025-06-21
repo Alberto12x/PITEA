@@ -2,7 +2,7 @@
 
 # ───────────── CONFIGURACIÓN GENERAL ─────────────
 
-IFILE="qsl2.jpg"            # Imagen base negra (1024x768)
+IFILE="fondos_tarjetas/qsl2.jpg"            # Imagen base negra (1024x768)
 SIZE="320x256"              # Tamaño final para SSTV
 FONT="Bitstream-Charter-Regular"
 COLOR="yellow"
