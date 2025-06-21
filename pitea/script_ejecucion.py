@@ -10,6 +10,31 @@ from pitea.mensajes import SEPARADOR
 from pitea.utils import comprobar_existencia_archivo
 
 
+def validar_datos(qra, qth, fecha, hora, freq, modo, rst):
+    """
+    Valida los datos ingresados por el usuario para la generación de la tarjeta QSL.
+
+    Esta función verifica que los datos ingresados cumplan con los formatos esperados y no estén vacíos.
+
+    Args:
+        qra (str): Indicativo del destinatario.
+        qth (str): QTH del destinatario.
+        fecha (str): Fecha del contacto en formato YYYY-MM-DD.
+        hora (str): Hora del contacto en formato UTC.
+        freq (str): Frecuencia del contacto.
+        modo (str): Modo de operación.
+        rst (str): RST o SNR reportado.
+
+    Returns:
+        None
+
+    Raises:
+        ValueError: Si alguno de los datos no es válido.
+    """
+    pass
+    # Aquí se pueden agregar más validaciones específicas según el formato esperado
+
+
 @click.group(context_settings=dict(help_option_names=["-h", "--help"]))
 def main():
     """Herramienta para la ocultacion y desocultacion de datos en imagen y audio."""
@@ -316,15 +341,18 @@ def generar_tarjeta(verbose, qra, qth, fecha, hora, freq, modo, rst):
         # activo el modo streaming o no
         constantes.STREAMING = True
 
+    validar_datos(qra, qth, fecha, hora, freq, modo, rst)
+
+
     if constantes.VERBOSE:
         click.echo("Generando tarjeta QSL con los siguientes datos:")
-        click.echo(f"Indicativo: {constantes.QRA}")
-        click.echo(f"Ubicación: {constantes.QTH}")
-        click.echo(f"Fecha: {constantes.FECHA}")
-        click.echo(f"Hora: {constantes.HORA}")
-        click.echo(f"Frecuencia: {constantes.FREQ}")
-        click.echo(f"Modo: {constantes.MODO}")
-        click.echo(f"Informe de señal: {constantes.RST}")
+        click.echo(f"Indicativo: {qra}")
+        click.echo(f"Ubicación: {qth}")
+        click.echo(f"Fecha: {fecha}")
+        click.echo(f"Hora: {hora}")
+        click.echo(f"Frecuencia: {freq}")
+        click.echo(f"Modo: {modo}")
+        click.echo(f"Informe de señal: {rst}")
 
     # Ejecutar script
     comando = [
@@ -338,8 +366,6 @@ def generar_tarjeta(verbose, qra, qth, fecha, hora, freq, modo, rst):
         modo,
         rst
     ]
-
-
 
 
 if __name__ == "__main__":

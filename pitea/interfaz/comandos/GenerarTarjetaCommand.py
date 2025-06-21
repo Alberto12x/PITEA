@@ -57,7 +57,7 @@ class GenerarTarjetaCommand(Command):
 
          # Construir el comando
         comando = [
-            "python3", constantes.SCRIPT_PATH, "generar_tarjeta",
+            "python3", constantes.SCRIPT_PATH, "generar-tarjeta",
             "--qra", self.qra,
             "--qth", self.qth,
             "--fecha", self.fecha,
@@ -65,15 +65,19 @@ class GenerarTarjetaCommand(Command):
             "--freq", self.freq,
             "--modo", self.modo,
             "--rst", self.rst,
-            "--verbose", verb,
         ]
+
+        if verb:
+            comando.extend(["-v"])
 
         try:
             builtins.print("\n⏳ Generando tarjeta QSL...")
             subprocess.run(comando, check=True)
             builtins.print(f"\n✅ Tarjeta generada correctamente: {self.qra}.jpg y {self.qra}_2.jpg\n")
+            input("Presiona Enter para continuar...")
         except subprocess.CalledProcessError as e:
             builtins.print(f"\033[1;31m❌ Error al ejecutar el script: {e}\033[0m")
+            input("Presiona Enter para continuar...")
 
 
 #main para pruebas

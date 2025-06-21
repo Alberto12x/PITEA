@@ -4,6 +4,7 @@ from interfaz.comandos.OcultarArchivoCommand import OcultarArchivoCommand
 from interfaz.comandos.DesocultarArchivoCommand import DesocultarArchivoCommand
 from interfaz.MenuPrinter import MenuPrinter
 from constantes import constantes
+from interfaz.comandos.GenerarTarjetaCommand import GenerarTarjetaCommand
 
 class Launch :
     """
@@ -30,7 +31,7 @@ class Launch :
         inv = Invoker()              #Creamos el invoker
 
         # Registro de comandos
-        comandos = [OcultarArchivoCommand(), DesocultarArchivoCommand()]
+        comandos = [OcultarArchivoCommand(), DesocultarArchivoCommand(), GenerarTarjetaCommand()]
         for idx, comando in enumerate(comandos, start=1):
             inv.registrar_comando(str(idx), comando)
 

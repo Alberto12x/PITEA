@@ -127,3 +127,5 @@ def ejecutar_comando(comando):
         print(constantes.ROJO + "\r❌ Error en la ejecución:\n" + constantes.RESET, error)
         input(constantes.MORADO + "Presione enter para continuar..." + constantes.RESET)
         raise error  
+    
+
