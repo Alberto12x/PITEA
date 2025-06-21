@@ -71,7 +71,7 @@ class GenerarTarjetaCommand(Command):
         try:
             builtins.print("\n⏳ Generando tarjeta QSL...")
             subprocess.run(comando, check=True)
-            builtins.print(f"\n✅ Tarjeta generada correctamente: {qra}.jpg y {qra}_2.jpg\n")
+            builtins.print(f"\n✅ Tarjeta generada correctamente: {self.qra}.jpg y {self.qra}_2.jpg\n")
         except subprocess.CalledProcessError as e:
             builtins.print(f"\033[1;31m❌ Error al ejecutar el script: {e}\033[0m")
 
