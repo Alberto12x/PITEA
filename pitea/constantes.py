@@ -31,6 +31,7 @@ class Constantes:
         self._FORMATO_IMAGEN_DESOCULTACION = "png"
         self._FORMATO_IMAGEN_OCULTACION = "png"
         self._FORMATO_AUDIO_OCULTACION = "wav"
+        self._FORMATO_IMAGEN_QSL ="png"
         
         self._MODES_SSTV = {
             "MartinM1": (MartinM1, (320, 256)),
@@ -148,6 +149,11 @@ class Constantes:
         ]
 
         self._LISTA_DIR_CACHE_DESOCULTACION = [self._RUTA_DESOCULTACION_DATOS, self._RUTA_DESOCULTACION_IMAGEN]
+
+
+        self._RUTA_QSL = self._RUTA_CACHE_ESPECIFICA / "qsl"
+        self._RUTA_QSL_DATOS = self._RUTA_DESOCULTACION / "datos"
+        self._RUTA_QSL_IMAGEN = self._RUTA_DESOCULTACION / "imagen"
 
         return conf
 
