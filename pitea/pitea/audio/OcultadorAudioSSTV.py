@@ -6,6 +6,7 @@ from pathlib import Path
 from pitea.mensajes import print
 import builtins
 import os
+from pitea.utils import launch_qsstv
 
 
 class OcultadorAudioSSTV(OcultadorAudio):
@@ -75,30 +76,6 @@ class OcultadorAudioSSTV(OcultadorAudio):
         sstv = constantes.MODES_SSTV[modo][0](image, samples_per_sec, bits)
         return sstv
 
-    def __launch_qsstv(self):
-        """
-        Lanza QSSTV en un entorno con variables de entorno limpias para evitar errores de Qt.
-
-        Elimina temporalmente variables como `QT_QPA_PLATFORM_PLUGIN_PATH` y similares,
-        cambia al directorio home, invoca `qsstv`, y restaura el cwd.
-        """
-
-        # Crear entorno limpio
-        env_clean = os.environ.copy()
-        for var in ["QT_QPA_PLATFORM_PLUGIN_PATH", "QT_QPA_PLATFORM", "LD_LIBRARY_PATH", "OPENCV_UI_BACKEND"]:
-            env_clean.pop(var, None)
-
-        # Guardar el cwd actual
-        original_cwd = os.getcwd()
-        try:
-            # Cambiar a un directorio seguro
-            os.chdir(os.path.expanduser("~"))
-            subprocess.run(["qsstv"], env=env_clean)
-        finally:
-            # Restaurar el cwd original (opcional pero recomendable)
-            os.chdir(original_cwd)
-
-
     def _desocultar(self):
         """
         Instruye al usuario para usar QSSTV y espera hasta que la imagen SSTV sea exportada.
@@ -117,7 +94,7 @@ class OcultadorAudioSSTV(OcultadorAudio):
             if not constantes.STREAMING:
                 builtins.print(f"Una vez abierto QSSTV, elija el audio con ruta \033[1;33m{RUTA_AUDIO}\033[0m")
             builtins.print(f"Asegúrese de guardar la imagen como \033[1;33m{str(RUTA_IMAGEN_DESOCULTACION_absoluta) % constantes.FORMATO_IMAGEN_DESOCULTACION}\033[0m")
-            self.__launch_qsstv()
+            launch_qsstv()
 
             # Verificar si hay al menos un archivo PNG en la ruta
             ruta_padre = Path(constantes.RUTA_IMAGEN_DESOCULTACION).parent

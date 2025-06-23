@@ -7,6 +7,8 @@ import tomllib
 import click
 import tomli_w
 from pathlib import Path
+import os
+import subprocess
 
 
 def crear_cache(lista):
@@ -87,3 +89,27 @@ def comprobar_existencia_archivo(nombre):
         raise click.UsageError(f"El archivo '{nombre}' no existe.")
     if not ruta.is_file():
         raise click.UsageError(f"'{nombre}' no es un archivo válido.")
+
+
+def launch_qsstv(self):
+        """
+        Lanza QSSTV en un entorno con variables de entorno limpias para evitar errores de Qt.
+
+        Elimina temporalmente variables como `QT_QPA_PLATFORM_PLUGIN_PATH` y similares,
+        cambia al directorio home, invoca `qsstv`, y restaura el cwd.
+        """
+
+        # Crear entorno limpio
+        env_clean = os.environ.copy()
+        for var in ["QT_QPA_PLATFORM_PLUGIN_PATH", "QT_QPA_PLATFORM", "LD_LIBRARY_PATH", "OPENCV_UI_BACKEND"]:
+            env_clean.pop(var, None)
+
+        # Guardar el cwd actual
+        original_cwd = os.getcwd()
+        try:
+            # Cambiar a un directorio seguro
+            os.chdir(os.path.expanduser("~"))
+            subprocess.run(["qsstv"], env=env_clean)
+        finally:
+            # Restaurar el cwd original (opcional pero recomendable)
+            os.chdir(original_cwd)
