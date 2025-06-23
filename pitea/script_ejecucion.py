@@ -8,6 +8,7 @@ from constantes import constantes
 from pitea.main import flujo_de_trabajo_ocultar, flujo_de_trabajo_desocultar
 from pitea.mensajes import SEPARADOR
 from pitea.utils import comprobar_existencia_archivo
+import subprocess
 
 
 def validar_datos(qra, qth, fecha, hora, freq, modo, rst):
@@ -354,7 +355,9 @@ def generar_tarjeta(verbose, qra, qth, fecha, hora, freq, modo, rst):
         click.echo(f"Modo: {modo}")
         click.echo(f"Informe de señal: {rst}")
 
-    # Ejecutar script
+
+    #! aqui leeriamos las rutas de fondos, fuentes, todo lo que decidamos que sea configurable para ser pasado al script
+    
     comando = [
         "bash",
         constantes.SCRIPT_GENERACION_QSL,
@@ -366,6 +369,19 @@ def generar_tarjeta(verbose, qra, qth, fecha, hora, freq, modo, rst):
         modo,
         rst
     ]
+
+
+    try:
+        if constantes.VERBOSE:
+            click.echo(f"LLamando al script {constantes.SCRIPT_GENERACION_QSL}...")
+        subprocess.run(comando, check=True)
+        if constantes.VERBOSE:
+            click.echo(f"Tarjeta generada en al ruta:(INSERTAR RUTA)")
+    except subprocess.CalledProcessError as e:
+        if constantes.VERBOSE:
+            click.echo(f"\033[1;31m❌ Error al ejecutar el script: {e}\033[0m")
+
+    
 
 
 if __name__ == "__main__":

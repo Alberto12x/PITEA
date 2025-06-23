@@ -47,6 +47,7 @@ class GenerarTarjetaCommand(Command):
         confirm = input("\n✅ ¿Confirmar y generar la tarjeta? (s/n): ").strip().lower()
         if confirm != "s":
             builtins.print("⛔ Cancelado por el usuario.")
+            input("Presiona Enter para continuar...")
             return
         
         verb = False
@@ -71,9 +72,9 @@ class GenerarTarjetaCommand(Command):
             comando.extend(["-v"])
 
         try:
-            builtins.print("\n⏳ Generando tarjeta QSL...")
+            builtins.print("⏳ Generando tarjeta QSL...")
             subprocess.run(comando, check=True)
-            builtins.print(f"\n✅ Tarjeta generada correctamente: {self.qra}.jpg y {self.qra}_2.jpg\n")
+            builtins.print(f"✅ Tarjeta generada correctamente: (FALTA INSERTAR LA RUTA)")
             input("Presiona Enter para continuar...")
         except subprocess.CalledProcessError as e:
             builtins.print(f"\033[1;31m❌ Error al ejecutar el script: {e}\033[0m")
@@ -82,6 +83,6 @@ class GenerarTarjetaCommand(Command):
 
 #main para pruebas
 
-if __name__ == "__main__":
-    command = GenerarTarjetaCommand()
-    command.ejecutar()
+# if __name__ == "__main__":
+#     command = GenerarTarjetaCommand()
+#     command.ejecutar()

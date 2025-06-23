@@ -17,7 +17,7 @@ class Constantes:
         Carga la configuración inicial llamando a actualizar_cache().
         """
 
-        self.SCRIPT_GENERACION_QSL= "."
+        self.SCRIPT_GENERACION_QSL= "./qso_fill2.sh"
         self._RUTA_PROGRAMA = Path(__file__).resolve().parent / "pitea"
         self._ARCHIVO_CONFIG = self._RUTA_PROGRAMA / "configuracion.toml"
         self._RUTA_CACHE_GENERAL = self._RUTA_PROGRAMA.parent / "cache"
