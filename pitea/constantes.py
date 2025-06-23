@@ -152,8 +152,19 @@ class Constantes:
 
 
         self._RUTA_QSL = self._RUTA_CACHE_ESPECIFICA / "qsl"
-        self._RUTA_QSL_DATOS = self._RUTA_DESOCULTACION / "datos"
-        self._RUTA_QSL_IMAGEN = self._RUTA_DESOCULTACION / "imagen"
+        self._RUTA_QSL_DATOS = self._RUTA_QSL / "datos" 
+        self._RUTA_QSL_IMAGEN = self._RUTA_QSL / "imagen" 
+
+        self._RUTA_QSL_DATOS_CRUDOS = self._RUTA_QSL_DATOS / "crudos.txt"
+        self._RUTA_QSL_DATOS_PROCESADOS = self._RUTA_QSL_DATOS / "procesados.txt"
+
+        self._RUTA_QSL_RECIBIDA = self._RUTA_QSL_IMAGEN / "tarjeta_qsl.%s" 
+
+        self._LISTA_DIR_CACHE_QSL = [
+            self._RUTA_QSL_IMAGEN,
+            self._RUTA_QSL_DATOS,
+        ]
+
 
         return conf
 

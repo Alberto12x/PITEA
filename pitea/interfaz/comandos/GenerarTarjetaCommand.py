@@ -1,11 +1,8 @@
 from interfaz.comandos.command import Command
 from constantes import constantes
-from interfaz.utils import comprobar_opcion
 from interfaz.MenuPrinter import MenuPrinter
-from pathlib import Path
 import builtins
 import subprocess
-import os
 
 class GenerarTarjetaCommand(Command):
     """
@@ -74,7 +71,7 @@ class GenerarTarjetaCommand(Command):
         try:
             builtins.print("⏳ Generando tarjeta QSL...")
             subprocess.run(comando, check=True)
-            builtins.print(f"✅ Tarjeta generada correctamente: (FALTA INSERTAR LA RUTA)")
+            builtins.print("✅ Tarjeta generada correctamente: (FALTA INSERTAR LA RUTA)")
             input("Presiona Enter para continuar...")
         except subprocess.CalledProcessError as e:
             builtins.print(f"\033[1;31m❌ Error al ejecutar el script: {e}\033[0m")

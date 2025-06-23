@@ -3,9 +3,7 @@
 Módulo utils: Funciones auxiliares para interacción con el usuario y ejecución de comandos.
 Incluye validación de rutas, selección de opciones y ejecución de flujo mediante Click.
 """
-import itertools
 import os
-import time
 from constantes import constantes
 from prompt_toolkit import prompt
 from prompt_toolkit.completion import PathCompleter

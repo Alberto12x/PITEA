@@ -60,8 +60,8 @@ convert -font "$FONT" -pointsize "$POINTSIZE" -fill "$COLOR" \
 convert -resize "$SIZE" "$OFILE" "$OFILE"
 
 # Metadatos (opcional)
-exiv2 -M"set Exif.Image.Artist $MY_QRA" "$OFILE"
-exiv2 -M"set Exif.Image.DateTime $fecha $qtr" "$OFILE"
-exiv2 -M"set Exif.Photo.UserComment $MY_QRA QSL to $qra, $freq, $mode, $rst" "$OFILE"
+# exiv2 -M"set Exif.Image.Artist $MY_QRA" "$OFILE"
+# exiv2 -M"set Exif.Image.DateTime $fecha $qtr" "$OFILE"
+# exiv2 -M"set Exif.Photo.UserComment $MY_QRA QSL to $qra, $freq, $mode, $rst" "$OFILE"
 
 echo "✅ Imagen SSTV QSL generada como: $OFILE"

@@ -1,11 +1,9 @@
 from constantes import constantes
-import subprocess
 from pitea.audio.OcultadorAudio import OcultadorAudio
 from PIL import Image
 from pathlib import Path
 from pitea.mensajes import print
 import builtins
-import os
 from pitea.utils import launch_qsstv
 
 

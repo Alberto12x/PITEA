@@ -12,6 +12,12 @@ from constantes import constantes
 from pitea.utils import crear_cache
 from colorama import init, Fore
 import traceback
+import builtins
+from pathlib import Path
+import pytesseract
+import base64
+from pitea.procesamiento_qsl.procesamiento_qsl import Procesamiento_datos_qsl
+
 
 # Inicializar colorama (para compatibilidad con Windows)
 init()
@@ -160,3 +166,55 @@ def flujo_de_trabajo_desocultar(
         print(f"{Fore.RED}Pila de llamadas:")
         traceback.print_exc()
         print(f"{Fore.RED}Programa acabado de manera abrupta{Fore.RESET}")
+
+
+def flujo_intercambio_qsl(transmision,input):
+
+    crear_cache(constantes.LISTA_DIR_CACHE_QSL)
+
+    RUTA_IMAGEN_QSL_absoluta = (Path.cwd() / Path(constantes._RUTA_QSL_RECIBIDA)).resolve()
+    if transmision :
+        #Marcamos al ruta donde guardar el resultado de la deco
+        builtins.print(f"Asegúrese de guardar la imagen como \033[1;33m{str(RUTA_IMAGEN_QSL_absoluta) % constantes.FORMATO_IMAGEN_QSL}\033[0m")
+    elif input:
+        # copia la imagen en la cache para un mayor control de ella
+        with open(input, "rb") as f:
+            datos_input= f.read()
+
+        with open(str(RUTA_IMAGEN_QSL_absoluta) % constantes.FORMATO_IMAGEN_QSL, "wb") as f:
+            f.write(datos_input)
+
+        pass
+
+    ##aqui la qsl recibida ya esta en {str(RUTA_IMAGEN_QSL_absoluta) % constantes.FORMATO_IMAGEN_QSL}
+
+    texto_extraido = pytesseract.image_to_string(str(RUTA_IMAGEN_QSL_absoluta) % constantes.FORMATO_IMAGEN_QSL, config='--psm 6 -c tessedit_char_whitelist=ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=')
+
+    # Filtrar caracteres válidos en base64
+    texto_base64 = ''.join(filter(lambda c: c.isalnum() or c in '+/=', texto_extraido))
+
+    # Decodificar el texto base64 a bytes
+    try:
+        datos_decodificados = texto_base64.encode()
+        print("Datos decodificados exitosamente")
+    except base64.binascii.Error:
+        raise ValueError("El texto extraído no es una cadena válida de base64")
+    
+    # ns si datos_decodificados son bits o string ya
+
+    ##guardo datos en crudo
+    with open(constantes._RUTA_QSL_DATOS_CRUDOS, "wb") as f:
+            f.write(datos_decodificados)
+
+
+    datos_procesados = Procesamiento_datos_qsl.procesamiento_datos_qsl(datos_decodificados)
+    
+    #guardo datos procesados, en teoeria limpios, estructurados y correctos
+    with open(constantes._RUTA_QSL_DATOS_PROCESADOS, "wb") as f:
+            f.write(datos_procesados)
+
+    ## aqui empezaria la logica de la generacion de la tarjeta de vuelta...
+    
+
+    
+

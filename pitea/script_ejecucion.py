@@ -2,14 +2,14 @@
 """
 Módulo CLI de Pitea: Provee comandos de ocultación y desocultación via Click.
 Contiene las funciones `ocultar` y `desocultar` que configuran y lanzan el flujo de trabajo.
+#! necesita actualizacacion esta documentacion
 """
 import click
 from constantes import constantes
-from pitea.main import flujo_de_trabajo_ocultar, flujo_de_trabajo_desocultar
+from pitea.main import flujo_de_trabajo_ocultar, flujo_de_trabajo_desocultar, flujo_intercambio_qsl
 from pitea.mensajes import SEPARADOR
 from pitea.utils import comprobar_existencia_archivo
 import subprocess
-
 
 def validar_datos(qra, qth, fecha, hora, freq, modo, rst):
     """
@@ -376,11 +376,53 @@ def generar_tarjeta(verbose, qra, qth, fecha, hora, freq, modo, rst):
             click.echo(f"LLamando al script {constantes.SCRIPT_GENERACION_QSL}...")
         subprocess.run(comando, check=True)
         if constantes.VERBOSE:
-            click.echo(f"Tarjeta generada en al ruta:(INSERTAR RUTA)")
+            click.echo("Tarjeta generada en al ruta:(INSERTAR RUTA)")
     except subprocess.CalledProcessError as e:
         if constantes.VERBOSE:
             click.echo(f"\033[1;31m❌ Error al ejecutar el script: {e}\033[0m")
 
+
+
+
+@main.command()
+@click.option(
+    "-v",
+    "--verbose",
+    is_flag=True,
+    help="Modo verbose , muestra mensajes del flujo.",
+)
+@click.option(
+    "-t",
+    "--transmision",
+    is_flag=True,
+    help="Utilizar Qsstv para decodificar la imagen o usar una imagen ya decodificada.",
+)
+@click.option(
+    "-i",
+    "--input",
+    help="Si no esta activo el flag 't' , ruta de la imagen decodificada.",
+)
+#opciones como si usar una ruta para la foto o abrir qsstv
+def intercambio_qsl(verbose,transmision,input):
+
+    # activo el modo verbose o no
+    if verbose:
+        constantes.VERBOSE = True
+
+
+    if transmision is None and input is None:
+        click.BadOptionUsage("No se ha introducido la ruta de la imagen decodificada.")
+
+    if constantes.VERBOSE:
+        click.echo("Iniciando intercambio QSL")
+        click.echo(f"Modo transmision: {transmision}")
+        click.echo(f"Ruta de imagen decodificada: {input}")
+
+    flujo_intercambio_qsl(transmision,input)
+
+
+
+    
     
 
 
