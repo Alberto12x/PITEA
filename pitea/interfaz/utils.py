@@ -29,12 +29,23 @@ def pedir_qra(mensaje="📡 Indicativo de TU estación (ej. EA2ABC): "):
         print(constantes.ROJO + "❌ Indicativo inválido. Debe tener 1-2 letras (prefijo), 1 número y 1-4 letras (sufijo). Ej: EA2ABC" + constantes.RESET)
 
 
-def pedir_qth(mensaje="🌍 QTH del destinatario: "):
+def pedir_qth(mensaje="🌍 QTH del destinatario (ej. Madrid o IM78DX): "):
+    pattern_locator = r"^[A-R]{2}[0-9]{2}([A-X]{2})?$"
+
     while True:
-        qth = input(mensaje).strip()
-        if qth:
-            return qth
-        print(constantes.ROJO + "❌ QTH no puede estar vacío." + constantes.RESET)
+        qth = input(mensaje).strip().upper()
+
+        if not qth:
+            print(constantes.ROJO + "❌ QTH no puede estar vacío." + constantes.RESET)
+            continue
+
+        if re.fullmatch(pattern_locator, qth):
+            return qth  # Es un Maidenhead locator válido
+
+        if re.fullmatch(r"[A-ZÁÉÍÓÚÜÑa-záéíóúüñ\s\-,.]+", qth):
+            return qth  # Es un nombre de lugar razonable
+
+        print(constantes.ROJO + "❌ QTH inválido. Usa un nombre de lugar (ej. Sevilla) o un locator (ej. IM78DX)." + constantes.RESET)
 
 def pedir_fecha(mensaje="📅 Fecha del contacto (YYYY-MM-DD): "):
     while True:
@@ -54,41 +65,23 @@ def pedir_hora(mensaje="⏰ Hora del contacto (UTC): "):
                 return hora
         print(constantes.ROJO + "❌ Hora inválida. Usa el formato HH:MM en 24h." + constantes.RESET)
 
-def pedir_freq(mensaje="📶 Frecuencia (ej. 14.074MHz): "):
+def pedir_freq(mensaje="📶 Frecuencia en MHz (ej. 14.074): "):
     """
-    Solicita al usuario una frecuencia y la normaliza a formato 'XX.XXX MHz'.
-
-    Acepta entradas como:
-    - 14074
-    - 14.074
-    - 14,074
-    - 14.074MHz
-    - 14074 kHz
-    - 14.074 mhz
-
-    Devuelve una cadena estandarizada: '14.074 MHz'
+    Solicita una frecuencia en MHz (número positivo, sin necesidad de indicar unidad).
     """
     while True:
-        freq = input(mensaje).strip().lower().replace(",", ".")
-        
-        # Si incluye unidad explícita
-        match = re.fullmatch(r"(\d+(\.\d+)?)(\s*(mhz|khz))?", freq)
-        if not match:
-            print(constantes.ROJO + "❌ Frecuencia inválida. Intenta con '14.074', '14074 kHz' o '14.074 MHz'." + constantes.RESET)
-            continue
-        
-        valor = float(match.group(1))
-        unidad = match.group(4)
+        freq = input(mensaje).strip()
 
-        # Convertir si está en kHz
-        if unidad == "khz" or (unidad is None and valor > 1000):
-            valor = valor / 1000
+        # Validar número decimal o entero positivo
+        if re.fullmatch(r"\d+(\.\d+)?", freq):
+            valor = float(freq)
+            if valor > 0:
+                return freq
+            else:
+                print(constantes.ROJO + "❌ La frecuencia debe ser mayor que 0 MHz." + constantes.RESET)
+        else:
+            print(constantes.ROJO + "❌ Frecuencia inválida. Introduce un número como '14.074'." + constantes.RESET)
 
-        # Validación básica de rango HF
-        if 1.8 <= valor <= 30.0:
-            return f"{valor:.3f} MHz"
-
-        print(constantes.ROJO + "❌ Frecuencia fuera del rango esperado para HF (1.8–30 MHz)." + constantes.RESET)
 
 def pedir_modo(mensaje="🎙️ Modo (SSB, CW, FT8, etc.): "):
     """
