@@ -5,7 +5,7 @@ import builtins
 import subprocess
 from utils import (
     pedir_qra, pedir_qth, pedir_fecha, pedir_hora,
-    pedir_freq, pedir_modo, pedir_rst
+    pedir_freq, pedir_modo, pedir_rst_snr
 )
 
 class GenerarTarjetaCommand(Command):
@@ -28,7 +28,7 @@ class GenerarTarjetaCommand(Command):
         self.hora = pedir_hora()
         self.freq = pedir_freq()
         self.modo = pedir_modo()
-        self.rst = pedir_rst()
+        self.rst = pedir_rst_snr()
 
         # Mostrar resumen
         builtins.print("\n📋 Datos a usar:")

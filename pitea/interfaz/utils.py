@@ -55,25 +55,79 @@ def pedir_hora(mensaje="⏰ Hora del contacto (UTC): "):
         print(constantes.ROJO + "❌ Hora inválida. Usa el formato HH:MM en 24h." + constantes.RESET)
 
 def pedir_freq(mensaje="📶 Frecuencia (ej. 14.074MHz): "):
+    """
+    Solicita al usuario una frecuencia y la normaliza a formato 'XX.XXX MHz'.
+
+    Acepta entradas como:
+    - 14074
+    - 14.074
+    - 14,074
+    - 14.074MHz
+    - 14074 kHz
+    - 14.074 mhz
+
+    Devuelve una cadena estandarizada: '14.074 MHz'
+    """
     while True:
-        freq = input(mensaje).strip()
-        if re.fullmatch(r"\d+(\.\d+)?\s*MHz", freq, re.IGNORECASE):
-            return freq.upper()
-        print(constantes.ROJO + "❌ Frecuencia inválida. Usa el formato '14.074MHz'." + constantes.RESET)
+        freq = input(mensaje).strip().lower().replace(",", ".")
+        
+        # Si incluye unidad explícita
+        match = re.fullmatch(r"(\d+(\.\d+)?)(\s*(mhz|khz))?", freq)
+        if not match:
+            print(constantes.ROJO + "❌ Frecuencia inválida. Intenta con '14.074', '14074 kHz' o '14.074 MHz'." + constantes.RESET)
+            continue
+        
+        valor = float(match.group(1))
+        unidad = match.group(4)
+
+        # Convertir si está en kHz
+        if unidad == "khz" or (unidad is None and valor > 1000):
+            valor = valor / 1000
+
+        # Validación básica de rango HF
+        if 1.8 <= valor <= 30.0:
+            return f"{valor:.3f} MHz"
+
+        print(constantes.ROJO + "❌ Frecuencia fuera del rango esperado para HF (1.8–30 MHz)." + constantes.RESET)
 
 def pedir_modo(mensaje="🎙️ Modo (SSB, CW, FT8, etc.): "):
+    """
+    Pide al usuario un modo de transmisión y valida si es uno conocido.
+    """
     while True:
         modo = input(mensaje).strip().upper()
-        if modo:
+        if modo in constantes.MODOS_VALIDOS_SSTV:
             return modo
-        print(constantes.ROJO + "❌ Modo no puede estar vacío." + constantes.RESET)
+        print(constantes.ROJO + f"❌ Modo inválido. Algunos válidos: {', '.join(constantes.MODOS_VALIDOS_SSTV[:6])}..." + constantes.RESET)
 
-def pedir_rst(mensaje="📶 RST o SNR reportado (ej. 595): "):
+def pedir_rst_snr(modo):
+    modo = modo.strip().upper()
+
     while True:
-        rst = input(mensaje).strip()
-        if re.fullmatch(r"\d{2,3}|-\d{1,2}", rst):
-            return rst
-        print(constantes.ROJO + "❌ RST inválido. Usa 2-3 dígitos o valores negativos como -10." + constantes.RESET)
+        rst = input("📶 RST o SNR reportado: ").strip().upper()
+
+        if modo in constantes.MODOS_SNR:
+            if re.fullmatch(r"[+-]?\d{1,2}", rst):
+                valor = int(rst)
+                if -30 <= valor <= 30:
+                    return f"{valor:+d}"
+            print(constantes.ROJO + "❌ SNR inválido. Debe ser entre -30 y +30 (ej. -10, +5)." + constantes.RESET)
+
+        elif modo in constantes.MODOS_RST_COMPLETO:
+            if re.fullmatch(r"[1-5][1-9][1-9]", rst):  # Ej. 599
+                return rst
+            print(constantes.ROJO + "❌ RST inválido. Usa 3 dígitos (ej. 599)." + constantes.RESET)
+
+        elif modo in constantes.MODOS_RS:
+            if re.fullmatch(r"[1-5][1-9]", rst):  # Ej. 59
+                return rst
+            print(constantes.ROJO + "❌ RS inválido. Usa 2 dígitos (ej. 59)." + constantes.RESET)
+
+        else:
+            # Por defecto, acepta 2 o 3 dígitos como fallback
+            if re.fullmatch(r"[1-5][1-9]([1-9])?", rst):
+                return rst
+            print(constantes.ROJO + "❌ Formato inválido. Usa RS (59) o RST (599) o SNR (-10, +15), según el modo." + constantes.RESET)
 
 def comprobar_directorio(mensaje):
     """

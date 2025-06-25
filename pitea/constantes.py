@@ -39,6 +39,22 @@ class Constantes:
             "ScottieS1": (ScottieS1, (320, 256)),
         }
 
+        self.MODOS_VALIDOS_SSTV =[
+            "SSB", "USB", "LSB", "AM", "FM",
+            "CW",
+            "FT8", "FT4", "RTTY", "PSK31", "JT65", "JT9", "MSK144",
+            "PACKET", "SSTV", "OLIVIA", "FSK", "HELL", "DOMINOEX"
+        ]
+
+        self.MODOS_SNR = {
+            "FT8", "FT4", "JT65", "JT9", "PSK", "DIGITAL", "MSK144", "OLIVIA", "DOMINOEX", "ROS", "HELL", "FT4", "FSQ", "FST4"
+        }
+
+        self.MODOS_RST_COMPLETO = {"CW"}
+
+        self.MODOS_RS = {"SSB", "AM", "FM", "LSB", "USB"}
+
+
         self._TAMAÑO_CABECERA_LSB = 32
         
         self._SCRIPT_PATH = "script_ejecucion.py"
