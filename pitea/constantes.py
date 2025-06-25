@@ -157,6 +157,7 @@ class Constantes:
 
         self._RUTA_QSL_DATOS_CRUDOS = self._RUTA_QSL_DATOS / "crudos.txt"
         self._RUTA_QSL_DATOS_PROCESADOS = self._RUTA_QSL_DATOS / "procesados.txt"
+        self._RUTA_QSL_DATOS_ESTRUCTURADOS = self._RUTA_QSL_DATOS / "estructurados.txt"
 
         self._RUTA_QSL_RECIBIDA = self._RUTA_QSL_IMAGEN / "tarjeta_qsl.%s" 
 
