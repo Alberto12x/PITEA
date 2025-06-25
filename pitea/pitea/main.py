@@ -4,6 +4,7 @@ Define las funciones `flujo_de_trabajo_ocultar` y `flujo_de_trabajo_desocultar`
 que orquestan los procesos de cifrado/desifrado y ocultación/desocultación
 utilizando fábricas de cifradores, imagen y audio.
 """
+from PIL import Image
 from pitea.mensajes import MENSAJE_INICIO_FLUJO, print
 from pitea.cifradores.cifradorfactory import CifradorFactory
 from pitea.imagen.imagenfactory import OcultadorImagenFactory
@@ -14,7 +15,8 @@ from colorama import init, Fore
 import traceback
 import builtins
 from pathlib import Path
-import pytesseract
+import numpy as np
+import easyocr
 import base64
 from pitea.procesamiento_qsl.procesamiento_qsl import Procesamiento_datos_qsl
 
@@ -188,14 +190,26 @@ def flujo_intercambio_qsl(transmision,input):
 
     ##aqui la qsl recibida ya esta en {str(RUTA_IMAGEN_QSL_absoluta) % constantes.FORMATO_IMAGEN_QSL}
 
-    texto_extraido = pytesseract.image_to_string(str(RUTA_IMAGEN_QSL_absoluta) % constantes.FORMATO_IMAGEN_QSL, config='--psm 6 -c tessedit_char_whitelist=ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=')
 
-    # Filtrar caracteres válidos en base64
-    texto_base64 = ''.join(filter(lambda c: c.isalnum() or c in '+/=', texto_extraido))
+    imagen=Image.open(str(RUTA_IMAGEN_QSL_absoluta) % constantes.FORMATO_IMAGEN_QSL)
+    # Convertir la imagen a un array de NumPy
+    imagen_array = np.array(imagen)
+
+    
+    # Configurar si se usará la GPU
+    gpu = True if constantes.conf['Ajustes_ocultador_imagen_text']["gpu"] == "True" else False
+
+    # Crear el lector OCR
+    reader = easyocr.Reader(['en'], gpu=gpu)  
+
+    # Extraer texto de la imagen
+    resultado = reader.readtext(imagen_array, detail=0, allowlist='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=_:') 
+    print(resultado)
+    texto_extraido = ' '.join(resultado)  # Obtener solo el texto
 
     # Decodificar el texto base64 a bytes
     try:
-        datos_decodificados = texto_base64.encode()
+        datos_decodificados = texto_extraido.encode()
         print("Datos decodificados exitosamente")
     except base64.binascii.Error:
         raise ValueError("El texto extraído no es una cadena válida de base64")
@@ -206,12 +220,11 @@ def flujo_intercambio_qsl(transmision,input):
     with open(constantes._RUTA_QSL_DATOS_CRUDOS, "wb") as f:
             f.write(datos_decodificados)
 
-
-    datos_procesados = Procesamiento_datos_qsl.procesamiento_datos_qsl(datos_decodificados)
-    
+    procesador_qsl = Procesamiento_datos_qsl()
+    datos_procesados = procesador_qsl.procesamiento_datos_qsl(datos_decodificados)
     #guardo datos procesados, en teoeria limpios, estructurados y correctos
-    with open(constantes._RUTA_QSL_DATOS_PROCESADOS, "wb") as f:
-            f.write(datos_procesados)
+    # with open(constantes._RUTA_QSL_DATOS_PROCESADOS, "wb") as f:
+    #         f.write(datos_procesados)
 
     ## aqui empezaria la logica de la generacion de la tarjeta de vuelta...
     
