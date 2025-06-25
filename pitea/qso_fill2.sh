@@ -1,31 +1,11 @@
-#!/bin/bash -f
-
-# ───────────── CONFIGURACIÓN GENERAL ─────────────
-
-IFILE="fondos_tarjetas/qsl2.jpg"            # Imagen base negra (1024x768)
-SIZE="320x256"              # Tamaño final para SSTV
-FONT="Bitstream-Charter-Regular"
-COLOR="yellow"
-POINTSIZE=90                # LETRA GRANDE para máxima legibilidad
-MY_QRA="EA4IAX"
-OFILE="sstv_qsl.jpg"
-
-# Coordenadas línea por línea (espaciado amplio)
-L1="50,120"
-L2="50,210"
-L3="50,300"
-L4="50,390"
-L5="50,480"
-L6="50,570"
-L7="50,660"
-L8="50,750"
+#!/bin/bash 
 
 function usage {
-  echo "Uso: $(basename $0) qra qth date utc freq mode rst"
+  echo "Uso: $(basename $0) qra qth date utc freq mode rst ifile size font color pointsize my_qra ofile l1 l2 l3 l4 l5 l6 l7 l8"
   exit 1
 }
 
-if [ $# -ne 7 ]; then
+if [ $# -ne 22 ]; then
   usage
 fi
 
@@ -36,6 +16,25 @@ qtr="$4"
 freq="$5"
 mode="$6"
 rst="$7"
+IFILE="$8"         # Imagen base negra (1024x768)
+SIZE="$9"           # Tamaño final para SSTV
+FONT="${10}"
+COLOR="${11}"
+POINTSIZE="${12}"               # LETRA GRANDE para máxima legibilidad
+MY_QRA="${13}"
+OFILE="${14}"
+L1="${15}"
+L2="${16}"
+L3="${17}"
+L4="${18}"
+L5="${19}"
+L6="${20}"
+L7="${21}"
+L8="${22}"
+
+echo "$20"
+
+
 
 if [ ! -f "$IFILE" ]; then
   echo "❌ Imagen base '$IFILE' no encontrada."

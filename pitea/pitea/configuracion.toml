@@ -1,6 +1,6 @@
 [persistente]
 contador_cache = 0
-ult_fecha = "23-06-2025_22:09"
+ult_fecha = "25-06-2025_18:07"
 
 [Ajustes_sstv]
 modo_sstv = "MartinM1"
@@ -12,3 +12,20 @@ tamanio_fuente = 17
 anchura_maxima = 800
 ruta_fuente = "../fuentes/DejaVuSans-Bold.ttf"
 gpu = "True"
+
+[QSL]
+fondo="fondos_tarjetas/qsl2.jpg" 
+size="320x256"  
+fuente="Bitstream-Charter-Regular"
+color="yellow"
+pointsize=90 
+my_qra="EA4IAX"
+output="sstv_qsl.jpg"
+L1="50,120"
+L2="50,210"
+L3="50,300"
+L4="50,390"
+L5="50,480"
+L6="50,570"
+L7="50,660"
+L8="50,750"

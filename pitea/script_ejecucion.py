@@ -4,12 +4,14 @@ Módulo CLI de Pitea: Provee comandos de ocultación y desocultación via Click.
 Contiene las funciones `ocultar` y `desocultar` que configuran y lanzan el flujo de trabajo.
 #! necesita actualizacacion esta documentacion
 """
+import shlex
 import click
 from constantes import constantes
 from pitea.main import flujo_de_trabajo_ocultar, flujo_de_trabajo_desocultar, flujo_intercambio_qsl
 from pitea.mensajes import SEPARADOR
 from pitea.utils import comprobar_existencia_archivo
 import subprocess
+from pitea.utils import cargar_configuracion
 
 def validar_datos(qra, qth, fecha, hora, freq, modo, rst):
     """
@@ -358,16 +360,33 @@ def generar_tarjeta(verbose, qra, qth, fecha, hora, freq, modo, rst):
 
     #! aqui leeriamos las rutas de fondos, fuentes, todo lo que decidamos que sea configurable para ser pasado al script
     
+    conf=cargar_configuracion(constantes.ARCHIVO_CONFIG)
+
     comando = [
         "bash",
         constantes.SCRIPT_GENERACION_QSL,
-        qra,
-        qth,
-        fecha,
-        hora,
-        freq,
-        modo,
-        rst
+        qra,             
+        qth,             
+        fecha,           
+        hora,            
+        freq,            
+        modo,            
+        rst,             
+        conf["QSL"]["fondo"],    
+        conf["QSL"]["size"],     
+        conf["QSL"]["fuente"],   
+        conf["QSL"]["color"],    
+        str(conf["QSL"]["pointsize"]), 
+        conf["QSL"]["my_qra"],         
+        conf["QSL"]["output"],         
+        conf["QSL"]["L1"],
+        conf["QSL"]["L2"],
+        conf["QSL"]["L3"],
+        conf["QSL"]["L4"],
+        conf["QSL"]["L5"],
+        conf["QSL"]["L6"],
+        conf["QSL"]["L7"],
+        conf["QSL"]["L8"],
     ]
 
 
