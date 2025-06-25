@@ -11,11 +11,69 @@ import sys
 sys.path.append("../../")  
 from script_ejecucion import main
 from click.testing import CliRunner
-
-
+import re
+from datetime import datetime
 
 
 archivo_completer = PathCompleter(expanduser=True)
+
+def pedir_qra(mensaje="📡 Indicativo de TU estación (ej. EA2ABC): "):
+    """
+    Solicita y valida el indicativo de llamada propio.
+    """
+    regex_indicativo = r"^[A-Z]{1,2}[0-9]{1}[A-Z]{1,4}$"
+    while True:
+        qra = input(mensaje).strip().upper()
+        if re.fullmatch(regex_indicativo, qra):
+            return qra
+        print(constantes.ROJO + "❌ Indicativo inválido. Debe tener 1-2 letras (prefijo), 1 número y 1-4 letras (sufijo). Ej: EA2ABC" + constantes.RESET)
+
+
+def pedir_qth(mensaje="🌍 QTH del destinatario: "):
+    while True:
+        qth = input(mensaje).strip()
+        if qth:
+            return qth
+        print(constantes.ROJO + "❌ QTH no puede estar vacío." + constantes.RESET)
+
+def pedir_fecha(mensaje="📅 Fecha del contacto (YYYY-MM-DD): "):
+    while True:
+        fecha = input(mensaje).strip()
+        try:
+            datetime.strptime(fecha, "%Y-%m-%d")
+            return fecha
+        except ValueError:
+            print(constantes.ROJO + "❌ Fecha inválida. Usa el formato YYYY-MM-DD." + constantes.RESET)
+
+def pedir_hora(mensaje="⏰ Hora del contacto (UTC): "):
+    while True:
+        hora = input(mensaje).strip()
+        if re.fullmatch(r"\d{2}:\d{2}", hora):
+            h, m = map(int, hora.split(":"))
+            if 0 <= h < 24 and 0 <= m < 60:
+                return hora
+        print(constantes.ROJO + "❌ Hora inválida. Usa el formato HH:MM en 24h." + constantes.RESET)
+
+def pedir_freq(mensaje="📶 Frecuencia (ej. 14.074MHz): "):
+    while True:
+        freq = input(mensaje).strip()
+        if re.fullmatch(r"\d+(\.\d+)?\s*MHz", freq, re.IGNORECASE):
+            return freq.upper()
+        print(constantes.ROJO + "❌ Frecuencia inválida. Usa el formato '14.074MHz'." + constantes.RESET)
+
+def pedir_modo(mensaje="🎙️ Modo (SSB, CW, FT8, etc.): "):
+    while True:
+        modo = input(mensaje).strip().upper()
+        if modo:
+            return modo
+        print(constantes.ROJO + "❌ Modo no puede estar vacío." + constantes.RESET)
+
+def pedir_rst(mensaje="📶 RST o SNR reportado (ej. 595): "):
+    while True:
+        rst = input(mensaje).strip()
+        if re.fullmatch(r"\d{2,3}|-\d{1,2}", rst):
+            return rst
+        print(constantes.ROJO + "❌ RST inválido. Usa 2-3 dígitos o valores negativos como -10." + constantes.RESET)
 
 def comprobar_directorio(mensaje):
     """

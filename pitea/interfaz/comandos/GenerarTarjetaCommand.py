@@ -3,6 +3,10 @@ from constantes import constantes
 from interfaz.MenuPrinter import MenuPrinter
 import builtins
 import subprocess
+from utils import (
+    pedir_qra, pedir_qth, pedir_fecha, pedir_hora,
+    pedir_freq, pedir_modo, pedir_rst
+)
 
 class GenerarTarjetaCommand(Command):
     """
@@ -13,23 +17,18 @@ class GenerarTarjetaCommand(Command):
 
     descripcion = "Generar tarjeta QSL"
 
-    def validar_datos(self):
-        print("\n🔍 Validando datos...(NO IMPLEMENTADO)")
-
     def ejecutar(self):
         menu = MenuPrinter()
         menu.mostrar_opcion(self.descripcion)
 
         # Recoger datos
-        self.qra = input("📡 Indicativo del destinatario (ej. EA2EEB): ").strip().upper()
-        self.qth = input("🌍 QTH del destinatario: ").strip()
-        self.fecha = input("📅 Fecha del contacto (YYYY-MM-DD): ").strip()
-        self.hora = input("⏰ Hora del contacto (UTC): ").strip()
-        self.freq = input("📶 Frecuencia (ej. 14.074MHz): ").strip()
-        self.modo = input("🎙️ Modo (SSB, CW, FT8, etc.): ").strip()
-        self.rst = input("📶 RST o SNR reportado (ej. 595): ").strip()
-
-        self.validar_datos()
+        self.qra = pedir_qra()
+        self.qth = pedir_qth()
+        self.fecha = pedir_fecha()
+        self.hora = pedir_hora()
+        self.freq = pedir_freq()
+        self.modo = pedir_modo()
+        self.rst = pedir_rst()
 
         # Mostrar resumen
         builtins.print("\n📋 Datos a usar:")
