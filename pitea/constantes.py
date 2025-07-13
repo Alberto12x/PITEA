@@ -18,6 +18,7 @@ class Constantes:
         """
 
         self.SCRIPT_GENERACION_QSL= "./qso_fill2.sh"
+        self.RUTA_LOCALIDADES= "./localidades.txt"
         self._RUTA_PROGRAMA = Path(__file__).resolve().parent / "pitea"
         self._ARCHIVO_CONFIG = self._RUTA_PROGRAMA / "configuracion.toml"
         self._RUTA_CACHE_GENERAL = self._RUTA_PROGRAMA.parent / "cache"
@@ -81,6 +82,8 @@ class Constantes:
         self._OPCIONES_OCULTACION_AUDIO=["lsb", "sstv"]
         self._OPCIONES_DESCOCULTACION_AUDIO= self._OPCIONES_OCULTACION_AUDIO + ["none"]
         self._OPCIONES_VERBOSE = ["s", "n"]
+
+        
 
     def __getattr__(self, name):
         """
