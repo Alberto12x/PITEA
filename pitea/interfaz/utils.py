@@ -93,25 +93,24 @@ def pedir_modo(mensaje="🎙️ Modo (SSB, CW, FT8, etc.): "):
             return modo
         print(constantes.ROJO + f"❌ Modo inválido. Algunos válidos: {', '.join(constantes.MODOS_VALIDOS_SSTV[:6])}..." + constantes.RESET)
 
-def pedir_rst_snr(modo):
-    modo = modo.strip().upper()
+def pedir_rst_snr():
 
     while True:
         rst = input("📶 RST o SNR reportado: ").strip().upper()
 
-        if modo in constantes.MODOS_SNR:
+        if rst in constantes.MODOS_SNR:
             if re.fullmatch(r"[+-]?\d{1,2}", rst):
                 valor = int(rst)
                 if -30 <= valor <= 30:
                     return f"{valor:+d}"
             print(constantes.ROJO + "❌ SNR inválido. Debe ser entre -30 y +30 (ej. -10, +5)." + constantes.RESET)
 
-        elif modo in constantes.MODOS_RST_COMPLETO:
+        elif rst in constantes.MODOS_RST_COMPLETO:
             if re.fullmatch(r"[1-5][1-9][1-9]", rst):  # Ej. 599
                 return rst
             print(constantes.ROJO + "❌ RST inválido. Usa 3 dígitos (ej. 599)." + constantes.RESET)
 
-        elif modo in constantes.MODOS_RS:
+        elif rst in constantes.MODOS_RS:
             if re.fullmatch(r"[1-5][1-9]", rst):  # Ej. 59
                 return rst
             print(constantes.ROJO + "❌ RS inválido. Usa 2 dígitos (ej. 59)." + constantes.RESET)

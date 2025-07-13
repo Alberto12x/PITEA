@@ -3,7 +3,7 @@ from constantes import constantes
 from interfaz.MenuPrinter import MenuPrinter
 import builtins
 import subprocess
-from utils import (
+from interfaz.utils import (
     pedir_qra, pedir_qth, pedir_fecha, pedir_hora,
     pedir_freq, pedir_modo, pedir_rst_snr
 )
