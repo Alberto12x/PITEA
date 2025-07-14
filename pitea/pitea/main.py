@@ -20,7 +20,6 @@ import easyocr
 import base64
 from pitea.procesamiento_qsl.procesamiento_qsl import Procesamiento_datos_qsl
 
-
 # Inicializar colorama (para compatibilidad con Windows)
 init()
 
@@ -28,12 +27,13 @@ def flujo_de_trabajo_ocultar(
     modo_cifrado,
     modo_cifrado_imagen,
     modo_cifrado_audio,
-    input,
+    archivo_entrada,
     input_imagen,
     input_audio,
     output,
     contraseña,
 ):
+
 
     """
     Ejecuta el flujo de cifrado y ocultación de datos en imagen y audio.
@@ -42,7 +42,7 @@ def flujo_de_trabajo_ocultar(
         modo_cifrado (str): Método de cifrado para datos ('aes' o 'none').
         modo_cifrado_imagen (str): Modo de ocultación en imagen ('lsb' o 'text').
         modo_cifrado_audio (str): Modo de ocultación en audio ('lsb' o 'sstv').
-        input (str): Ruta al archivo de datos a ocultar.
+        archivo_entrada (str): Ruta al archivo de datos a ocultar.
         input_imagen (str): Ruta a la imagen contenedora.
         input_audio (str): Ruta al audio contenedor.
         output (str): Nombre o ruta base del archivo de salida de audio.
@@ -66,7 +66,7 @@ def flujo_de_trabajo_ocultar(
         cifrador = CifradorFactory.creacion(modo_cifrado, contraseña, None)
 
         print("Cifrador creado , cifrando datos ...")
-        cifrador.cifrar_guardar(input)
+        cifrador.cifrar_guardar(archivo_entrada)
 
         print("Creando ocultador en imagenes ...")
         ocultador_imagen = OcultadorImagenFactory.creacion(
@@ -227,7 +227,7 @@ def flujo_intercambio_qsl(transmision,input):
     #         f.write(datos_procesados)
 
     ## aqui empezaria la logica de la generacion de la tarjeta de vuelta...
-    
+
 
     
 

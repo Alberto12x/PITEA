@@ -9,7 +9,6 @@ from prompt_toolkit import prompt
 from prompt_toolkit.completion import PathCompleter
 import sys
 sys.path.append("../../")  
-from script_ejecucion import main
 from click.testing import CliRunner
 import re
 from datetime import datetime
@@ -215,6 +214,7 @@ def ejecutar_comando(comando):
 
     try:
         runner = CliRunner()
+        from script_ejecucion import main
         result = runner.invoke(main, comando)
         print(result.output)
 

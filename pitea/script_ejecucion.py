@@ -428,7 +428,6 @@ def intercambio_qsl(verbose,transmision,input):
     if verbose:
         constantes.VERBOSE = True
 
-
     if transmision is None and input is None:
         click.BadOptionUsage("No se ha introducido la ruta de la imagen decodificada.")
 
@@ -437,7 +436,9 @@ def intercambio_qsl(verbose,transmision,input):
         click.echo(f"Modo transmision: {transmision}")
         click.echo(f"Ruta de imagen decodificada: {input}")
 
-    flujo_intercambio_qsl(transmision,input)
+    flujo_intercambio_qsl(transmision, input)
+
+    
 
 
 
