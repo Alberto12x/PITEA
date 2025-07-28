@@ -52,9 +52,11 @@ class IntercambioQSLCommand(Command):
         if generar_tarjeta:
             # Mostramos la tarjeta recibida por pantalla
             if modo == "transmision":
-                ruta_tarjeta = constantes._RUTA_QSL_RECIBIDA
+                formato = "png"
+                ruta_tarjeta = constantes._RUTA_QSL_RECIBIDA % formato
             else:
-                ruta_tarjeta = constantes._RUTA_QSL_RECIBIDA
+                formato = ruta_imagen.split(".")[-1]
+                ruta_tarjeta = constantes._RUTA_QSL_RECIBIDA % formato
             # Abrir y mostrar la imagen
             imagen = Image.open(ruta_tarjeta)
             imagen.show(title="Tarjeta recibida")
