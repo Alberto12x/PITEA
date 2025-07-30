@@ -1,10 +1,12 @@
 import json
 from constantes import constantes
 import re
+import difflib
 class Procesamiento_datos_qsl:
     
     def procesamiento_datos_qsl(self, datos_decodificados):
         self.__dic_campos = {}
+        self.__dic_campos_arreglados= {}
         self.__procesamiento_estructura(datos_decodificados)
         self.__arreglo_errores()
 
@@ -128,12 +130,15 @@ class Procesamiento_datos_qsl:
             constantes.MODOS_RST_COMPLETO |
             constantes.MODOS_RS
         )
-        patron_rst = r"((?:R[5S]T|R[5S])?[ :\-]?\s?[1-5ISZ][1-9ISZ]{1,2})"
 
-        patron_rst = r"(" + "|".join(modo_a_regex(modo) for modo in todas_posibilidades_rst) + r")"
+        patron_rst = (
+            r"(" +
+            "|".join(modo_a_regex(modo) for modo in todas_posibilidades_rst) +
+            r"|(?:R[5S]T|R[5S])?[ :\-]?\s?[1-5ISZ][1-9ISZ]{1,2}" +
+            r")"
+        )
 
          
-
         self.__dic_campos = {}
 
         # Busca modo
@@ -166,8 +171,111 @@ class Procesamiento_datos_qsl:
 
          
     def __arreglo_errores(self):
-        
-        print(self.__dic_campos)
+        equivalencias_letras_a_num = {
+            'B': '8',
+            'E': '3',
+            'G': '9',
+            'I': '1',
+            'L': '1',
+            'O': '0',
+            'S': '2',
+            'T': '7',
+            'Z': '5',
+        }
+
+        def reemplazar(texto,mapa):
+            resultado = ''
+            for c in texto:
+                if c in mapa:
+                    resultado += mapa[c]
+                else:
+                    resultado += c
+            return resultado
+
+        # 1. Arreglo modo
+        modos_raw = self.__dic_campos["MODE"]
+        modos_raw = modos_raw if isinstance(modos_raw, list) else [modos_raw]
+        modos_raw = [modo.upper() for modo in modos_raw]
+
+        modos_arreglados = []
+        vistos = set()
+        for modo in modos_raw:
+            mejor_match = difflib.get_close_matches(modo, constantes.MODOS_VALIDOS_SSTV, n=1, cutoff=0.4)
+            if mejor_match:
+                candidato = mejor_match[0]
+                if candidato not in vistos: # Eliminar duplicados
+                    modos_arreglados.append(candidato)
+                    vistos.add(candidato)
+
+        self.__dic_campos_arreglados["MODE"] = modos_arreglados
+
+        candidato=None; mejor_match=None
+
+        # 2. Arreglo reset
+
+        todas_posibilidades_rst = (
+            constantes.MODOS_SNR |
+            constantes.MODOS_RST_COMPLETO |
+            constantes.MODOS_RS
+        )
+
+        rst_raw = self.__dic_campos["RST"]
+        rst_raw = rst_raw if isinstance(rst_raw, list) else [rst_raw]
+        rst_raw = [rst.upper() for rst in rst_raw]
+
+        rst_arreglados = []
+        vistos = set()
+        aux=False
+        for rst in rst_raw:
+            mejor_match = difflib.get_close_matches(rst, todas_posibilidades_rst, n=1, cutoff=0.5)
+            if mejor_match:
+                candidato = mejor_match[0]
+                if candidato not in vistos: # Eliminar duplicados
+                    rst_arreglados.append((rst,candidato))
+                    vistos.add(candidato)
+            else :
+
+                try:
+                    rst_alphanum= ''.join(c for c in rst if c.isalnum())
+                    rst_num= reemplazar(rst_alphanum,equivalencias_letras_a_num)
+
+                    rst_int = int(rst_num)  
+                    if -30 < rst_int < 30 :
+                        rst_arreglados.append((rst,rst_int));aux=True
+                    elif rst_int >= 111: # [1-5][1-9]{2}
+                        if  0<(rst_int // 100)<=5:
+                            rst_arreglados.append((rst,rst_int));aux=True
+                    elif rst_int >= 11 :
+                        if  0<(rst_int // 10)<=5:
+                            rst_arreglados.append((rst,rst_int));aux=True
+                except ValueError:
+                    pass
+
+                if not aux :
+                    resultado = re.search(r"RST", rst, re.IGNORECASE)
+                    if resultado:
+                        rst_arreglados.append((rst,rst))
+
+                aux = False
+
+
+
+        print(rst_raw)
+        print(rst_arreglados)
+        self.__dic_campos_arreglados["RST"] = rst_arreglados
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
