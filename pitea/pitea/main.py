@@ -203,7 +203,7 @@ def flujo_intercambio_qsl(transmision,input):
     reader = easyocr.Reader(['en'], gpu=gpu)  
 
     # Extraer texto de la imagen
-    resultado = reader.readtext(imagen_array, detail=0, allowlist='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=_:') 
+    resultado = reader.readtext(imagen_array, detail=0, allowlist='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=_-:') 
     print(resultado)
     texto_extraido = ' '.join(resultado)  # Obtener solo el texto
 

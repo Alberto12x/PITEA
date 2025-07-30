@@ -6,6 +6,7 @@ class Procesamiento_datos_qsl:
     def procesamiento_datos_qsl(self, datos_decodificados):
         self.__dic_campos = {}
         self.__procesamiento_estructura(datos_decodificados)
+        self.__arreglo_errores()
 
         
     
@@ -27,15 +28,16 @@ class Procesamiento_datos_qsl:
 
 
     def __estructura_pitea(self,campos_separados) :
+        print(campos_separados)
         self.__dic_campos["QRA_RECEPTOR"] = campos_separados[0].split(":")[1].strip()
-        self.__dic_campos["DATE"] = campos_separados[1].split(":")[1].strip()
-        self.__dic_campos["FREQ"] = campos_separados[3].split(":")[1].strip()
-        self.__dic_campos["MODE"] = campos_separados[4].split(":")[1].strip()
-        self.__dic_campos["RST"] = campos_separados[5].split(":")[1].strip()
-        self.__dic_campos["QRA_EMISOR"] = campos_separados[6].split(":")[1].strip()
-        self.__dic_campos["QTH"] = campos_separados[7].split(":")[1].strip()
+        self.__dic_campos["DATE"] = campos_separados[2].strip()
+        self.__dic_campos["FREQ"] = campos_separados[4].split(":")[1].strip()
+        self.__dic_campos["MODE"] = campos_separados[5].split(":")[1].strip()
+        self.__dic_campos["RST"] = campos_separados[6].split(":")[1].strip()
+        self.__dic_campos["QRA_EMISOR"] = campos_separados[7].split(":")[1].strip()
+        self.__dic_campos["QTH"] = campos_separados[8].split(":")[1].strip()
 
-        hora_cruda = campos_separados[2]  # "Time:17:43UTC"
+        hora_cruda = campos_separados[3]  # "Time:17:43UTC"
 
         # Extraer las partes numéricas
         partes_hora = hora_cruda.split(":")[1:]  # ['17', '43UTC']
@@ -163,6 +165,9 @@ class Procesamiento_datos_qsl:
         self.__dic_campos['RST'] = re.findall(patron_rst, input_text, re.IGNORECASE)
 
          
+    def __arreglo_errores(self):
+        
+        print(self.__dic_campos)
 
 
 
