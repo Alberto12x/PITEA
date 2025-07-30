@@ -28,7 +28,7 @@ class GenerarTarjetaCommand(Command):
         self.hora = pedir_hora()
         self.freq = pedir_freq()
         self.modo = pedir_modo()
-        self.rst = pedir_rst_snr()
+        self.rst = pedir_rst_snr(self.modo)
 
         # Mostrar resumen
         builtins.print("\n📋 Datos a usar:")

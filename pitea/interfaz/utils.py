@@ -92,33 +92,30 @@ def pedir_modo(mensaje="🎙️ Modo (SSB, CW, FT8, etc.): "):
             return modo
         print(constantes.ROJO + f"❌ Modo inválido. Algunos válidos: {', '.join(constantes.MODOS_VALIDOS_SSTV[:6])}..." + constantes.RESET)
 
-def pedir_rst_snr():
+def pedir_rst_snr(modo):
 
     while True:
-        rst = input("📶 RST o SNR reportado: ").strip().upper()
+        rst = input("📶 RS, RST o SNR reportado: ").strip().upper()
 
-        if rst in constantes.MODOS_SNR:
+        if modo in constantes.MODOS_SNR:
             if re.fullmatch(r"[+-]?\d{1,2}", rst):
                 valor = int(rst)
                 if -30 <= valor <= 30:
                     return f"{valor:+d}"
             print(constantes.ROJO + "❌ SNR inválido. Debe ser entre -30 y +30 (ej. -10, +5)." + constantes.RESET)
 
-        elif rst in constantes.MODOS_RST_COMPLETO:
+        elif modo in constantes.MODOS_RST_COMPLETO:
             if re.fullmatch(r"[1-5][1-9][1-9]", rst):  # Ej. 599
                 return rst
             print(constantes.ROJO + "❌ RST inválido. Usa 3 dígitos (ej. 599)." + constantes.RESET)
 
-        elif rst in constantes.MODOS_RS:
+        elif modo in constantes.MODOS_RS:
             if re.fullmatch(r"[1-5][1-9]", rst):  # Ej. 59
                 return rst
             print(constantes.ROJO + "❌ RS inválido. Usa 2 dígitos (ej. 59)." + constantes.RESET)
 
         else:
-            # Por defecto, acepta 2 o 3 dígitos como fallback
-            if re.fullmatch(r"[1-5][1-9]([1-9])?", rst):
-                return rst
-            print(constantes.ROJO + "❌ Formato inválido. Usa RS (59) o RST (599) o SNR (-10, +15), según el modo." + constantes.RESET)
+            print(constantes.ROJO + "❌ Formato inválido. Usa RS (59) o RST (599) o SNR (-10, +15), según el modo.")
 
 def comprobar_directorio(mensaje):
     """
